@@ -40,7 +40,7 @@ function ProjectCard({ title, year, languages, description, imageSrc }: ProjectC
 
 export function ProjectSection() {
   return (
-    <div className="bg-[#141414]">
+    <div className="bg-[#141414]" >
       <div className="mx-auto max-w-[1300px] h-auto p-4 flex flex-col justify-center items-center">
         {/* First Row of Projects */}
         <div className="flex flex-col lg:flex-row w-full justify-between space-y-8 lg:space-y-0 lg:space-x-8">

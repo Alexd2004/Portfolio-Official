@@ -28,13 +28,13 @@ export function NavBar() {
             <a href="#skillpage" className="text-white flex items-center justify-center px-2 sm:px-4 h-full hover:text-[#f77062] transition-all duration-300">Skills</a>
           </li>
           <li className="h-20">
-            <a href="#projectspage" className="text-white flex items-center justify-center px-2 sm:px-4 h-full hover:text-[#f77062] transition-all duration-300">Projects</a>
+            <a href="#projectpage" className="text-white flex items-center justify-center px-2 sm:px-4 h-full hover:text-[#f77062] transition-all duration-300">Projects</a>
           </li>
           <li className="h-20">
             <a href="#contact" className="text-white flex items-center justify-center px-2 sm:px-4 h-full hover:text-[#f77062] transition-all duration-300">Contact</a>
           </li>
           <li className="h-20">
-            <a href="/" className="text-white flex items-center justify-center px-2 sm:px-4 h-full hover:text-[#f77062] transition-all duration-300">CV</a>
+            <a href="/Resume.pdf" className="text-white flex items-center justify-center px-2 sm:px-4 h-full hover:text-[#f77062] transition-all duration-300" target='_blank' rel='noopener noreferrer'>CV</a>
           </li>
         </ul>
       </div>
