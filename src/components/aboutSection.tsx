@@ -3,7 +3,7 @@ export function AboutSection() {
       <div className="bg-[#141414] pl-4 pr-4">
         <div className="grid items-center justify-center w-full max-w-[1300px] lg:h-[50vh] md:h-[60vh] h-full pb-2 px-6 mx-auto md:grid-cols-3 gap-4">
           <div className="md:col-span-2 text-center md:text-left">
-            <h2 className="mt-2 text-4xl pb-4 font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#b721ff] to-[#21d4fd] md:text-5xl">
+            <h2 className="mt-2 text-4xl pb-4 font-bold text-transparent bg-clip-text  bg-gradient-to-t from-[#ff0844] to-[#ffb199] md:text-5xl">
               Alexandre Duteau
             </h2>
             <p className="mt-2   text-lg font-semibold text-white leading-relaxed md:text-xl">
