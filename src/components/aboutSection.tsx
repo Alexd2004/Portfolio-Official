@@ -7,7 +7,7 @@ export function AboutSection() {
               Alexandre Duteau
             </h2>
             <p className="mt-2   text-lg font-semibold text-white leading-relaxed md:text-xl">
-              Hello, I am a University student attending the <span className="UNI">University of Calgary</span>. I am currently pursuing a <span className="UNI">Computer Science</span> degree, and I am in my second year of classes.<br /><br />
+              Hello, I am a University student attending the <span className="UNI">University of Calgary</span>. I am currently pursuing a <span className="UNI">Computer Science</span> degree, and I am headed into my third year of classes.<br /><br />
               Some of my favorite artists are Bruno Mars, Arctic Monkeys, Wallows, 1975, Backseat Lovers, Hozier, and Vincent Vallieres!
             </p>
           </div>
