@@ -78,13 +78,3 @@ function SkillCard({ name, imageSrc, customClass, imgClass = "" }: { name: strin
 }
 
 
-// function SkillCard({ name, imageSrc, customClass, imgClass = "" }: { name: string, imageSrc: string, customClass: string, imgClass?: string }) {
-//   return (
-//     <div className={`relative flex items-center justify-center h-[80px] w-[80px] md:h-[100px] md:w-[100px] ${customClass} rounded-lg`}>
-//       <img src={imageSrc} alt={`${name} Logo`} className="w-12 h-12 md:w-16 md:h-16 object-contain  ${imgClass}"  />
-//       <div className="absolute inset-0 flex items-center justify-center backdrop-filter backdrop-blur-sm opacity-0 hover:opacity-100 transition-opacity duration-300">
-//         <span className="text-black font-bold text-xs md:text-sm">{name}</span>
-//       </div>
-//     </div>
-//   );
-// }
