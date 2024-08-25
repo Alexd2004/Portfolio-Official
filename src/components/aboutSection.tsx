@@ -15,7 +15,7 @@ export function AboutSection() {
             <img
               src="/images/personal.JPG"
               alt="Personal Photo"
-              className="w-64 h-64 rounded-full object-cover shadow-lg"
+              className="w-64 h-64 rounded-full object-cover object-[center top] scale-110 shadow-lg"
             />
           </div>
         </div>
