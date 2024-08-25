@@ -14,7 +14,7 @@ export function Footer() {
           <div className="w-32 h-px bg-gradient-to-l from-transparent to-gray-400"></div>
         </div>
         <div className="mt-4 flex justify-center space-x-6 text-white">
-          <a href="/path/to/cv.pdf" target="_blank" rel="noopener noreferrer" className="hover:text-gray-400 pr-4">
+          <a href="/Resume.pdf" target="_blank" rel="noopener noreferrer" className="hover:text-gray-400 pr-4">
             CV
           </a>
           <a href="https://www.linkedin.com/in/alexandreduteau/" target="_blank" rel="noopener noreferrer" className="hover:text-gray-400 pr-4">
