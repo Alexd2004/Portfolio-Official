@@ -13,7 +13,7 @@ export function NavBar() {
     <nav className="bg-[#424242]/80 h-20 flex justify-center items-center sticky top-0 z-[999]">
       <div className="flex justify-between items-center w-full max-w-[1300px] mx-auto px-6 md:px-12">
         <a href="/" id="navbar__logo" className="text-[24px] sm:text-[28px] md:text-[32px] bg-clip-text text-transparent bg-gradient-to-t from-[#ff0844] to-[#ffb199] flex items-center cursor-pointer">
-          <i className="fas fa-gem mr-2"></i>Alexandre Duteau
+          <i className="fas fa-gem mr-2"></i> <span className='AD'> Alexandre Duteau </span>
         </a>
         <div id="mobile-menu" onClick={toggleMenu} className="flex flex-col justify-between h-5 cursor-pointer md:hidden">
           <span className={`block w-6 h-[2px] bg-white transition-transform ${isMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`}></span>
