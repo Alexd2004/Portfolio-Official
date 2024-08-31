@@ -33,6 +33,10 @@ body {
   }
 }
 
+.landing-page-bg {
+  background-image: url("/images/landingPage.png");
+  background-color: #cabbb6;
+}
 
 .AD{
   font-style: italic;
