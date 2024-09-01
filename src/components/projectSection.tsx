@@ -38,6 +38,35 @@ function ProjectCard({ title, year, languages, description, imageSrc }: ProjectC
   );
 }
 
+
+function MiniProjectCard({ title, languages, description, imageSrc }: ProjectCardProps) {
+  return (
+    <div className="w-full  mb-8 lg:mb-0 bg-[#141414]">
+      <div className="bg-[#141414] rounded-lg flex flex-col p-4 pb-4">
+        {/* Title */}
+        <h1 className="text-lg md:text-xl font-bold bg-gradient-to-r from-[#0A9841] to-[#b6e0c6] bg-clip-text text-transparent mb-2">
+          {title}
+        </h1>
+
+        {/* Image */}
+        <div className="bg-[#141414] w-full mb-4 rounded-lg">
+          <img
+            src={imageSrc}
+            alt={title}
+            className="object-cover h-[100px] sm:h-[120px] md:h-[150px] lg:h-[180px] w-full rounded-lg"
+          />
+        </div>
+
+        {/* Text Below the Image */}
+        <div className="text-white mt-4">
+          <p className="font-bold text-sm">Languages: <span className="font-normal">{languages.join(', ')}</span></p>
+          <p className="italic mt-2 text-sm">{description}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function ProjectSection() {
   return (
     <div className="bg-[#141414]" >
@@ -79,6 +108,35 @@ export function ProjectSection() {
             imageSrc="/images/WIP.jpg"
           />
         </div>
+        <div className="my-8"></div> 
+
+        <div className="flex flex-col lg:flex-row w-full justify-between space-y-8 lg:space-y-0 lg:space-x-8">
+          <div className="flex w-full lg:w-[45%]  space-x-4">
+            <MiniProjectCard 
+              title="Space Invaders"
+              languages={['JavaScript', 'HTML', 'CSS']}
+              description="A browser-based remake of the classic Space Invaders game"
+              imageSrc="/images/SpaceInvaders.png" year={'2023'}            />
+            <MiniProjectCard 
+              title="MineSweeper"
+              languages={['JavaScript', 'HTML', 'CSS']}
+              description="A lightweight and interactive version of the classic Minesweeper game"
+              imageSrc="/images/MineSweeper.png" year={'2023'}            />
+          </div>
+          <div className="flex w-full lg:w-[45%] space-x-4">
+            <MiniProjectCard 
+              title="Portfolio"
+              languages={['NextJs', 'React', 'TailwindCSS']}
+              description="A modern and responsive portfolio website showcasing projects and skills"
+              imageSrc="/images/Portfolio.png" year={'2024'}            />
+            <MiniProjectCard 
+              title="URL Shortener"
+              languages={['Go, React, TailwindCSS, Encore']}
+              description="A web app that shortens URLs for the user. Currently in development of the frontend, backend is complete."
+              imageSrc="/images/WIP.jpg" year={'2024'}            />
+          </div>
+        </div>
+
       </div>
     </div>
   );
