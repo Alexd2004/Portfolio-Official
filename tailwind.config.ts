@@ -8,6 +8,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        'eb-garamond': ['var(--font-eb-garamond)', 'serif'],
+        'playfair': ['var(--font-playfair)', 'serif'],
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
