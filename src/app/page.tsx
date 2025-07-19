@@ -2,41 +2,21 @@
 
 import Image from "next/image";
 import "./globals.css";
-import {NavBar} from "@/components/navbar";
-import { AboutTitle } from "@/components/aboutTitle";
-import { AboutSection } from "@/components/aboutSection";
-import { SkillsTitle } from "@/components/skillsTitle";
-import { SkillSection } from "@/components/skillsSection";
-import { ProjectTitle } from "@/components/projectTitle";
-import { ProjectSection } from "@/components/projectSection";
-import { Footer } from "@/components/footer";
-import { EB_Garamond } from "next/font/google";
-import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 import { Timeline } from "@/components/Timeline";
+import { Filter, Code2, Globe, Database, Paintbrush } from "lucide-react";
+import { ProjectSection } from "@/components/projectSection";
 
 export default function Home() {
 
-  const [expanded, setExpanded] = useState({
-    midas: false,
-    nullus: false,
-    cofounder: false
-  });
-
-  const toggleExpand = (section: "midas" | "nullus" | "cofounder") => {
-    setExpanded(prev => ({
-      ...prev,
-      [section]: !prev[section]
-    }));
-  }
   return (
-    <div className="bg-[#2c2c2c] min-h-screen w-screen">
+    <div className="bg-[#2c2c2c] min-h-screen w-full">
       {/* Example of using Playfair Display */}
-      <div className="flex justify-center pt-20 p-40">
+      <div className="flex justify-center pt-20  p-20">
         <div className="w-full h-full flex-1">
           
           {/* Bio and Skills Side-by-Side */}
-          <div className="flex flex-row justify-center items-start pt-10 gap-12 mb-16">
+          <div className="flex flex-row p-20 justify-center items-start pt-10 pb-14 gap-12 mb-16">
             {/* Bio Section (Left) */}
             <div className="flex-1 text-white text-center space-y-4 flex flex-col items-center">
               <div className="mb-2">
@@ -53,9 +33,10 @@ export default function Home() {
                 working on various projects that combine creativity with technical expertise.
               </p>
               <p className="text-gray-300 leading-relaxed">
-                Passionate computer science student with a keen interest in software development, 
-                machine learning, and innovative technologies. Currently pursuing my degree while 
-                working on various projects that combine creativity with technical expertise.
+                I specialize in full-stack development, data science, and AI/machine learning, 
+                with experience in technologies ranging from React and Next.js to Python and C++. 
+                My projects demonstrate a strong foundation in both theoretical concepts and 
+                practical implementation, always striving to create impactful solutions.
               </p>
             </div>
             {/* Vertical Divider */}
@@ -64,8 +45,8 @@ export default function Home() {
             </div>
             {/* Skills Section (Right) */}
             <div className="flex-1 text-white text-center space-y-4 flex flex-col items-center">
-              <div className="mb-2">
-                <h1 className="font-playfair text-4xl font-bold text-white mb-4">
+              <div className="mb-1">
+                <h1 className="font-playfair text-4xl font-bold text-white ">
                   Skills
                 </h1>
               </div>
@@ -127,6 +108,13 @@ export default function Home() {
 
 
           <Timeline />
+
+          {/* Project Section */}
+          <ProjectSection />
+
+
+
+          
 
          
         </div>
