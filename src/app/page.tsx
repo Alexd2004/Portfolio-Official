@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Timeline } from "@/components/Timeline";
 import { Filter, Code2, Globe, Database, Paintbrush } from "lucide-react";
 import { ProjectSection } from "@/components/projectSection";
+import { CertificationsSection } from "@/components/certificationsSection";
 
 export default function Home() {
 
@@ -110,9 +111,13 @@ export default function Home() {
 
 
           <Timeline />
+          <ProjectSection />
+
+
+          {/* Certifications Section */}
+          <CertificationsSection />
 
           {/* Project Section */}
-          <ProjectSection />
 
 
 
