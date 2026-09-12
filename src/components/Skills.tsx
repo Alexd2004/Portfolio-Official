@@ -1,33 +1,20 @@
 import { skills } from "@/data/skills";
-import { SectionHeading } from "./SectionHeading";
+import { Section } from "./Section";
 
+/** Written out as sentences. A list of tools reads better than a wall of chips. */
 export function Skills() {
   return (
-    <section id="skills" className="mx-auto max-w-site px-6 py-20 md:py-24">
-      <SectionHeading eyebrow="Skills" title="What I work with" />
-
-      <dl className="space-y-6">
-        {skills.map((row) => (
-          <div
-            key={row.group}
-            className="grid gap-3 border-t border-line-soft pt-6 md:grid-cols-[200px_minmax(0,1fr)] md:gap-8"
-          >
-            <dt className="text-sm font-medium uppercase tracking-[0.12em] text-muted">
-              {row.group}
-            </dt>
-            <dd className="flex flex-wrap gap-2">
-              {row.items.map((s) => (
-                <span
-                  key={s}
-                  className="rounded-md border border-line bg-surface px-3 py-1.5 text-sm text-ink-2"
-                >
-                  {s}
-                </span>
-              ))}
+    <Section id="skills" title="Skills" lede="The short version. The resume has the long one.">
+      <dl className="max-w-measure space-y-7">
+        {skills.map((group) => (
+          <div key={group.group} className="md:grid md:grid-cols-entry md:gap-x-8">
+            <dt className="text-[14px] leading-6 text-slate md:pt-[0.15rem]">{group.group}</dt>
+            <dd className="mt-1 text-[17px] leading-relaxed text-spruce md:mt-0">
+              {group.items.join(", ")}.
             </dd>
           </div>
         ))}
       </dl>
-    </section>
+    </Section>
   );
 }

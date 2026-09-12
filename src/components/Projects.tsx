@@ -1,53 +1,106 @@
-import { Github } from "lucide-react";
+import Link from "next/link";
 import { projects, moreWork } from "@/data/projects";
-import { SectionHeading } from "./SectionHeading";
-import { ProjectCard } from "./ProjectCard";
+import { Section } from "./Section";
+import { ProjectVisual } from "./ProjectVisual";
 
 export function Projects() {
   return (
-    <section id="projects" className="mx-auto max-w-site px-6 py-20 md:py-24">
-      <SectionHeading
-        eyebrow="Projects"
-        title="Things I've built"
-        lede="Hackathon wins, a data pipeline, coursework I'm still fond of, and a drone that's currently on the bench."
-      />
+    <Section
+      id="projects"
+      title="Projects"
+      lede="Two hackathons, a data pipeline, some coursework I still like, and a drone."
+    >
+      <ol className="space-y-16 md:space-y-20">
+        {projects.map((p, i) => (
+          <li
+            key={p.slug}
+            className="grid gap-y-6 lg:grid-cols-[minmax(0,1fr)_19rem] lg:gap-x-10 xl:grid-cols-[minmax(0,1fr)_22rem] xl:gap-x-14"
+          >
+            <div className="max-w-measure">
+              <p className="text-[14px] text-slate">
+                {p.kind}
+                {p.context && <> · {p.context}</>}
+                {p.status === "in-progress" && (
+                  <> · <span className="text-sandstone">in progress</span></>
+                )}
+              </p>
+              <h3 className="display-soft mt-2 font-display text-[1.75rem] font-medium leading-tight text-spruce md:text-[2rem]">
+                <Link href={`/project/${p.slug}`} className="transition-colors hover:text-sandstone">
+                  {p.title}
+                </Link>
+              </h3>
+              <p className="mt-3 text-[16px] leading-relaxed text-spruce text-pretty">
+                {p.tagline}
+              </p>
+              <p className="mt-3 text-[14px] leading-relaxed text-slate">{p.stack.join(", ")}</p>
 
-      <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {projects.map((p) => (
-          <ProjectCard key={p.slug} project={p} />
+              <p className="mt-5 flex flex-wrap gap-x-6 gap-y-1 text-[15px]">
+                <Link href={`/project/${p.slug}`} className="link font-medium text-spruce">
+                  Read more
+                </Link>
+                {p.website && (
+                  <a
+                    href={p.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="link text-spruce"
+                  >
+                    Live site ↗
+                  </a>
+                )}
+                {p.github && (
+                  <a
+                    href={p.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="link text-spruce"
+                  >
+                    Source ↗
+                  </a>
+                )}
+              </p>
+            </div>
+
+            {/* The visual overhangs the container edge a little on wide screens. */}
+            <div className="lg:self-start xl:-mr-6">
+              <Link href={`/project/${p.slug}`} aria-label={`${p.title} — details`} className="block">
+                <ProjectVisual project={p} priority={i === 0} />
+              </Link>
+            </div>
+          </li>
         ))}
-      </div>
+      </ol>
 
-      <div className="mt-16">
-        <h3 className="font-display text-xl font-semibold text-ink">More work</h3>
-        <p className="mt-1 text-sm text-muted">Smaller builds and services worth a line each.</p>
-
-        <ul className="mt-6 grid gap-4 md:grid-cols-2">
+      <div className="mt-24 md:mt-28">
+        <h3 className="display-soft font-display text-[1.5rem] font-medium leading-tight text-spruce">
+          Smaller things
+        </h3>
+        <p className="mt-1.5 font-display text-[16px] italic text-slate">
+          Services and builds worth a line each.
+        </p>
+        <ul className="mt-8 grid gap-x-10 gap-y-8 md:grid-cols-2">
           {moreWork.map((w) => (
-            <li
-              key={w.title}
-              className="rounded-lg border border-line-soft bg-surface p-5"
-            >
-              <div className="flex items-start justify-between gap-3">
-                <h4 className="font-medium text-ink">{w.title}</h4>
-                {w.github && (
+            <li key={w.title} className="max-w-[26rem]">
+              <h4 className="text-[16px] font-medium text-spruce">
+                {w.github ? (
                   <a
                     href={w.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-none text-muted transition-colors hover:text-ink"
-                    aria-label={`${w.title} on GitHub`}
+                    className="link"
                   >
-                    <Github size={16} />
+                    {w.title} ↗
                   </a>
+                ) : (
+                  w.title
                 )}
-              </div>
-              <p className="mt-1.5 text-sm leading-relaxed text-ink-2 text-pretty">{w.detail}</p>
-              <p className="mt-2.5 text-xs text-muted">{w.stack}</p>
+              </h4>
+              <p className="mt-1.5 text-[15px] leading-relaxed text-slate text-pretty">{w.detail}</p>
+              <p className="mt-1.5 text-[13px] text-slate/80">{w.stack}</p>
             </li>
           ))}
         </ul>
       </div>
-    </section>
+    </Section>
   );
 }

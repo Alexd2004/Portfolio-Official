@@ -1,20 +1,22 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Source_Sans_3 } from "next/font/google";
+import { Fraunces, Karla } from "next/font/google";
 import "./globals.css";
 import { site } from "@/data/site";
 
-const playfair = Playfair_Display({
+// Fraunces, variable: optical size for text vs. display, plus the SOFT and WONK
+// axes so headings can loosen up without loading a second face.
+const fraunces = Fraunces({
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
   style: ["normal", "italic"],
-  variable: "--font-playfair",
+  axes: ["opsz", "SOFT", "WONK"],
+  variable: "--font-fraunces",
   display: "swap",
 });
 
-const sourceSans = Source_Sans_3({
+const karla = Karla({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-source-sans",
+  style: ["normal", "italic"],
+  variable: "--font-karla",
   display: "swap",
 });
 
@@ -38,7 +40,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${playfair.variable} ${sourceSans.variable}`}>
+    <html lang="en" className={`${fraunces.variable} ${karla.variable}`}>
       <body className="font-sans">{children}</body>
     </html>
   );

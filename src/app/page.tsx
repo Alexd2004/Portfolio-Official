@@ -1,25 +1,24 @@
-import { Nav } from "@/components/Nav";
+import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
-import { Experience } from "@/components/Experience";
+import { Work } from "@/components/Work";
 import { Projects } from "@/components/Projects";
 import { Skills } from "@/components/Skills";
-import { Certifications } from "@/components/Certifications";
+import { Credentials } from "@/components/Credentials";
+import { OffTheClock } from "@/components/OffTheClock";
 import { Footer } from "@/components/Footer";
 
 export default function Home() {
   return (
     <>
-      <Nav />
+      <Header />
       <main>
         <Hero />
-        <div className="border-t border-line-soft" />
-        <Experience />
-        <div className="border-t border-line-soft" />
+        <Work />
         <Projects />
-        <div className="border-t border-line-soft" />
         <Skills />
-        <div className="border-t border-line-soft" />
-        <Certifications />
+        <Credentials />
+        <div className="h-8 md:h-12" aria-hidden />
+        <OffTheClock />
       </main>
       <Footer />
     </>

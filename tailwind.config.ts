@@ -9,25 +9,30 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ground: "var(--ground)",
-        surface: "var(--surface)",
-        "surface-2": "var(--surface-2)",
-        line: "var(--line)",
-        "line-soft": "var(--line-soft)",
-        ink: "var(--ink)",
-        "ink-2": "var(--ink-2)",
-        muted: "var(--muted)",
-        accent: "var(--accent)",
-        "accent-ink": "var(--accent-ink)",
-        "accent-soft": "var(--accent-soft)",
+        snow: "var(--snow)",
+        sky: "var(--sky)",
+        frost: "var(--frost)",
+        spruce: "var(--spruce)",
+        slate: "var(--slate)",
+        sandstone: "var(--sandstone)",
+        dusk: "var(--dusk)",
+        "dusk-ink": "var(--dusk-ink)",
+        "dusk-muted": "var(--dusk-muted)",
+        "dusk-line": "var(--dusk-line)",
       },
       fontFamily: {
-        display: ["var(--font-playfair)", "Georgia", "serif"],
-        sans: ["var(--font-source-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
+        display: ["var(--font-fraunces)", "Georgia", "Times New Roman", "serif"],
+        sans: ["var(--font-karla)", "ui-sans-serif", "system-ui", "sans-serif"],
       },
       maxWidth: {
-        site: "68rem",
-        prose: "44rem",
+        site: "76rem",
+        measure: "38rem",
+      },
+      gridTemplateColumns: {
+        // Section shell: sticky title column on the left, content on the right.
+        section: "13rem minmax(0, 1fr)",
+        // Hanging meta column inside a section (dates, kinds, years).
+        entry: "7.5rem minmax(0, 1fr)",
       },
     },
   },

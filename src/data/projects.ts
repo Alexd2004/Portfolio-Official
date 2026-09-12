@@ -12,6 +12,8 @@ export type Project = {
   website?: string;
   status?: "in-progress";
   context?: string;
+  /** Typographic stand-in for projects without a screenshot. Values are lifted from the verified copy above. */
+  figure?: { value: string; label: string };
 };
 
 export const projects: Project[] = [
@@ -35,6 +37,7 @@ export const projects: Project[] = [
       "Full SSR auth flow: signup, email confirmation, password reset, protected routes",
     ],
     github: "https://github.com/Alexd2004/HackTheChange2025-webapp",
+    figure: { value: "9th", label: "of 65 teams, in a 24-hour build" },
   },
   {
     slug: "nfl-prediction-pipeline",
@@ -55,6 +58,7 @@ export const projects: Project[] = [
       "16-week walk-forward backtest, retraining weekly on prior data only",
       "Rolling-statistics feature engine cached to Parquet",
     ],
+    figure: { value: "71%", label: "accuracy, against a 62.8% majority-class baseline" },
   },
   {
     slug: "micro-drone",
@@ -77,6 +81,7 @@ export const projects: Project[] = [
       "CRSF loopback test validates the parser with zero RF hardware",
       "Thrust-to-weight analysis drove the move to 3S and a lighter ESC",
     ],
+    figure: { value: "5", label: "firmware modules, each testable on its own" },
   },
   {
     slug: "ecominded",
