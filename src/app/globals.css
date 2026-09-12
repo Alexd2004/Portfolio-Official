@@ -3,81 +3,59 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --ground: #1a1a1c;
+  --surface: #222225;
+  --surface-2: #2a2a2e;
+  --line: #36363b;
+  --line-soft: #2e2e33;
+  --ink: #f0efeb;
+  --ink-2: #c6c5c0;
+  --muted: #8c8b90;
+  --accent: #d9a55a;
+  --accent-ink: #e8c283;
+  --accent-soft: rgba(217, 165, 90, 0.12);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
   }
 }
 
 body {
-  
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: var(--ground);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--ground);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
-}
-
-.landing-page-bg {
-  background-image: url("/images/landingPage.png");
-  background-color: #cabbb6;
-}
-
-.AD{
-  font-style: italic;
-  /* font-size: 27px; */
-  background-color: #ff8177;
-  background-image: linear-gradient(to top, #ff0844 25%, #cabbb6 75%);
-  background-size: 100%;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-text-fill-color: transparent;
-
-
-}
-
-
-
-.UNI{
-  font-style: italic;
-  /* font-size: 27px; */
-  background-color: #ff8177;
-  background-image: linear-gradient(to top, #ff0844 25%, #cabbb6 75%);
-  background-size: 100%;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-text-fill-color: transparent;
-
-
-}
-
-
-
-.skillerbanner__container {
-  background-color: #ff8177;
-  background-image: linear-gradient(to top, #ff0844 0%, #ffb199 100%);
-  background-size: 100%;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-text-fill-color: transparent;
-  display: inline-block; /* Make the block inline to correctly center it vertically */
-  vertical-align: middle; 
+  .text-pretty {
+    text-wrap: pretty;
+  }
 }

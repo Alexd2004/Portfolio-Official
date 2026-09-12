@@ -8,14 +8,26 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      fontFamily: {
-        'eb-garamond': ['var(--font-eb-garamond)', 'serif'],
-        'playfair': ['var(--font-playfair)', 'serif'],
+      colors: {
+        ground: "var(--ground)",
+        surface: "var(--surface)",
+        "surface-2": "var(--surface-2)",
+        line: "var(--line)",
+        "line-soft": "var(--line-soft)",
+        ink: "var(--ink)",
+        "ink-2": "var(--ink-2)",
+        muted: "var(--muted)",
+        accent: "var(--accent)",
+        "accent-ink": "var(--accent-ink)",
+        "accent-soft": "var(--accent-soft)",
       },
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      fontFamily: {
+        display: ["var(--font-playfair)", "Georgia", "serif"],
+        sans: ["var(--font-source-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
+      },
+      maxWidth: {
+        site: "68rem",
+        prose: "44rem",
       },
     },
   },
