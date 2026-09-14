@@ -1,11 +1,9 @@
 {
   "version": "0.0.1",
   "configurations": [
-    {
-      "name": "portfolio",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
-      "port": 3000
-    }
+    { "name": "portfolio", "runtimeExecutable": "npm", "runtimeArgs": ["run", "dev"], "port": 3000 },
+    { "name": "design-a", "runtimeExecutable": "sh", "runtimeArgs": ["-c", "cd .claude/worktrees/agent-ac3aef28751189860 && exec npx next dev -p 3001"], "port": 3001 },
+    { "name": "design-b", "runtimeExecutable": "sh", "runtimeArgs": ["-c", "cd .claude/worktrees/agent-ac3192a9f03a949ff && exec npx next dev -p 3002"], "port": 3002 },
+    { "name": "design-c", "runtimeExecutable": "sh", "runtimeArgs": ["-c", "cd .claude/worktrees/agent-a58b2e171bf2299a5 && exec npx next dev -p 3003"], "port": 3003 }
   ]
 }

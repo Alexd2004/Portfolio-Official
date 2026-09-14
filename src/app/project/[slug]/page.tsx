@@ -33,7 +33,7 @@ export default function ProjectPage({ params }: Params) {
     <>
       <Header home={false} />
       <main className="mx-auto max-w-site px-6 pb-12 pt-12 md:px-10 md:pb-20 md:pt-16">
-        <Link href="/#projects" className="link text-[15px] text-slate hover:text-spruce">
+        <Link href="/#projects" className="link inline-block text-[15px] text-slate transition-colors hover:text-spruce">
           ← All projects
         </Link>
 
@@ -63,11 +63,10 @@ export default function ProjectPage({ params }: Params) {
           </div>
         </header>
 
-        <div className="mt-12 md:mt-16 lg:grid lg:grid-cols-section lg:gap-x-16">
-          <div className="hidden lg:block" aria-hidden />
-          <div className="xl:-mr-6">
-            <ProjectVisual project={project} priority large sizes="(min-width: 1216px) 1000px, 100vw" />
-          </div>
+        {/* The lead figure runs the full container width, breaking the
+            two-column grid the way the hero photo breaks the measure. */}
+        <div className="mt-12 md:mt-16 xl:-mx-6">
+          <ProjectVisual project={project} variant="lead" priority sizes="(min-width: 1280px) 1216px, 100vw" />
         </div>
 
         <div className="mt-12 grid gap-y-10 md:mt-16 lg:grid-cols-section lg:gap-x-16">
@@ -84,7 +83,7 @@ export default function ProjectPage({ params }: Params) {
             </div>
             <div>
               <h2 className="display-soft font-display text-[1.25rem] font-medium text-spruce">Stack</h2>
-              <p className="mt-3 text-[15px] leading-relaxed text-slate">{project.stack.join(", ")}.</p>
+              <p className="mt-3 text-[15px] leading-relaxed text-slate">{project.stack.join(", ")}</p>
             </div>
             {(project.github || project.website) && (
               <ul className="flex flex-wrap gap-x-6 gap-y-1 text-[15px] lg:flex-col">
