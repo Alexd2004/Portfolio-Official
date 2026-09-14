@@ -14,11 +14,14 @@ export type Project = {
   context?: string;
   /** Typographic stand-in for projects without a screenshot. Values are lifted from the verified copy above. */
   figure?: { value: string; label: string };
+  /** The two most current pieces get the larger treatment in the list. */
+  featured?: boolean;
 };
 
 export const projects: Project[] = [
   {
     slug: "urbansignal",
+    featured: true,
     title: "UrbanSignal",
     kind: "Full-Stack",
     accent: "#4f8fe0",
@@ -40,28 +43,8 @@ export const projects: Project[] = [
     figure: { value: "9th", label: "of 65 teams, in a 24-hour build" },
   },
   {
-    slug: "nfl-prediction-pipeline",
-    title: "NFL Game Prediction Pipeline",
-    kind: "Data / ML",
-    accent: "#e0a24f",
-    context: "Personal project · 2-person · 82% of the codebase",
-    tagline:
-      "A 13,000-line pipeline from web scraping through feature engineering to a served XGBoost model, with a walk-forward backtest.",
-    description: [
-      "The pipeline scrapes 1,673 NFL games from 2018 to 2024 across 28 scripts using BeautifulSoup, requests, and Selenium, handling paginated navigation, inconsistent table schemas, and rate limiting, and lands them as 30,000+ structured CSVs. A rolling-statistics engine then generates team, player, and momentum features with peak tracking, cached to Parquet for fast retraining.",
-      "The model is an XGBoost classifier reaching 71% accuracy against a 62.8% majority-class baseline, tuned through a staged randomized hyperparameter search with class-weight balancing, SMOTE oversampling, and decision-threshold optimization. It's validated with a walk-forward backtest across the 2024 season that retrains weekly on prior data only, to avoid look-ahead bias, and served through a Flask JSON API consumed by a Next.js frontend.",
-    ],
-    stack: ["Python", "XGBoost", "scikit-learn", "pandas", "BeautifulSoup", "Selenium", "Flask", "Next.js"],
-    points: [
-      "1,673 games scraped into 30,000+ structured CSVs across 28 scripts",
-      "71% accuracy against a 62.8% majority-class baseline",
-      "16-week walk-forward backtest, retraining weekly on prior data only",
-      "Rolling-statistics feature engine cached to Parquet",
-    ],
-    figure: { value: "71%", label: "accuracy, against a 62.8% majority-class baseline" },
-  },
-  {
     slug: "micro-drone",
+    featured: true,
     title: "Micro Quadcopter",
     kind: "Embedded",
     accent: "#5fbf9a",
@@ -82,6 +65,27 @@ export const projects: Project[] = [
       "Thrust-to-weight analysis drove the move to 3S and a lighter ESC",
     ],
     figure: { value: "5", label: "firmware modules, each testable on its own" },
+  },
+  {
+    slug: "nfl-prediction-pipeline",
+    title: "NFL Game Prediction Pipeline",
+    kind: "Data / ML",
+    accent: "#e0a24f",
+    context: "Personal project · 2-person · 82% of the codebase",
+    tagline:
+      "A 13,000-line pipeline from web scraping through feature engineering to a served XGBoost model, with a walk-forward backtest.",
+    description: [
+      "The pipeline scrapes 1,673 NFL games from 2018 to 2024 across 28 scripts using BeautifulSoup, requests, and Selenium, handling paginated navigation, inconsistent table schemas, and rate limiting, and lands them as 30,000+ structured CSVs. A rolling-statistics engine then generates team, player, and momentum features with peak tracking, cached to Parquet for fast retraining.",
+      "The model is an XGBoost classifier reaching 71% accuracy against a 62.8% majority-class baseline, tuned through a staged randomized hyperparameter search with class-weight balancing, SMOTE oversampling, and decision-threshold optimization. It's validated with a walk-forward backtest across the 2024 season that retrains weekly on prior data only, to avoid look-ahead bias, and served through a Flask JSON API consumed by a Next.js frontend.",
+    ],
+    stack: ["Python", "XGBoost", "scikit-learn", "pandas", "BeautifulSoup", "Selenium", "Flask", "Next.js"],
+    points: [
+      "1,673 games scraped into 30,000+ structured CSVs across 28 scripts",
+      "71% accuracy against a 62.8% majority-class baseline",
+      "16-week walk-forward backtest, retraining weekly on prior data only",
+      "Rolling-statistics feature engine cached to Parquet",
+    ],
+    figure: { value: "71%", label: "accuracy, against a 62.8% majority-class baseline" },
   },
   {
     slug: "ecominded",
