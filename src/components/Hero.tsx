@@ -3,7 +3,7 @@ import { site } from "@/data/site";
 
 export function Hero() {
   return (
-    <section className="mx-auto max-w-site px-6 pb-24 pt-14 md:px-10 md:pb-32 md:pt-20 lg:pt-24">
+    <section className="mx-auto max-w-site px-6 pb-12 pt-14 md:px-10 md:pb-20 md:pt-20 lg:pt-24">
       <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[minmax(0,1fr)_21rem] xl:grid-cols-[minmax(0,1fr)_24rem]">
         {/* Name and the one spoken sentence. */}
         <div>
