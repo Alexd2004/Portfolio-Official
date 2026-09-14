@@ -89,7 +89,7 @@ export function ProjectVisual({
 
     return (
       <div
-        className={`sky-drift flex w-full flex-col justify-end bg-arch ${panel} ${pad}`}
+        className={`flex w-full flex-col justify-end bg-arch ${panel} ${pad}`}
         aria-label={`${project.figure.value} ${project.figure.label}`}
         role="img"
       >
