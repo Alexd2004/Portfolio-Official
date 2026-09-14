@@ -35,14 +35,14 @@ export function ProjectVisual({
   if (project.figure) {
     return (
       <div
-        className={`flex w-full flex-col justify-end bg-sky ${
+        className={`flex w-full flex-col justify-end bg-arch ${
           large ? "aspect-[16/9] p-8 md:p-12" : "aspect-[16/10] p-6"
         }`}
         aria-label={`${project.figure.value} ${project.figure.label}`}
         role="img"
       >
         <span
-          className={`display-wonk font-display font-medium leading-none tracking-tight text-spruce ${
+          className={`display-wonk font-display font-medium leading-none tracking-tight text-gold ${
             large ? "text-[clamp(5rem,14vw,9rem)]" : "text-[4.25rem]"
           }`}
           aria-hidden
@@ -50,7 +50,7 @@ export function ProjectVisual({
           {project.figure.value}
         </span>
         <span
-          className={`mt-2 max-w-[18rem] font-display italic leading-snug text-slate ${
+          className={`mt-2 max-w-[18rem] font-display italic leading-snug text-dusk-ink ${
             large ? "text-[1.2rem]" : "text-[15px]"
           }`}
           aria-hidden

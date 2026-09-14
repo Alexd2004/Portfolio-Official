@@ -3,27 +3,43 @@
 @tailwind utilities;
 
 /*
-  Calgary, late winter, late morning.
+  Calgary, late winter, a chinook coming through.
 
-  snow       the ground. Snow under a high overcast: cool, faintly green, not cream.
-  sky        the one tinted surface. A chinook-arch sky, pale and washed out.
-  frost      hairlines. What the sky looks like on a windowpane.
-  spruce     the ink. Spruce in shadow instead of black; everything reads warmer.
+  The picture: a chinook arch. A hard bank of blue-grey cloud across the
+  western sky, and under it a band of clear light going gold and then orange
+  over the Rockies. Snow on the ground, spruce in the yards. That one view
+  supplies every colour here.
+
+  snow       the ground. Bright snow under a clearing sky: cool, near-white,
+             not cream.
+  sky        the pale tinted surface. Clear winter sky, an actual blue this
+             time rather than a grey one, so it separates from the snow.
+  frost      hairlines.
+  spruce     the ink. Spruce in shadow instead of black.
   slate      secondary text. River stone, the Bow in March.
-  sandstone  the accent. Paskapoo sandstone, the stuff the old downtown is built from.
-  dusk       the footer band. The sky in the photo, about an hour after sunset.
+  chinook    the accent. The orange at the bottom of the arch, deepened so it
+             holds up at text size on snow. Links, bullets, focus, "in progress".
+  gold       the same light before it goes orange. Only used on dark ground:
+             the big figures on the project panels.
+  arch       the cloud bank itself. Blue-slate, the project figure panels.
+  dusk       the night side of the same sky, an hour later. The "Off the
+             clock" band and the footer.
+  sandstone  kept as a name for the accent; it now points at chinook.
 */
 :root {
-  --snow: #f2f4f1;
-  --sky: #cad8e1;
-  --frost: #d8dedb;
-  --spruce: #1e332a;
-  --slate: #56656c;
-  --sandstone: #8f6538;
-  --dusk: #1f2b3f;
-  --dusk-ink: #e7ebf1;
-  --dusk-muted: #a3aec3;
-  --dusk-line: #35435c;
+  --snow: #f4f6f3;
+  --sky: #c3d8ea;
+  --frost: #d0d8d6;
+  --spruce: #142a21;
+  --slate: #4f6068;
+  --chinook: #b54a12;
+  --gold: #f0b552;
+  --arch: #2c4160;
+  --sandstone: var(--chinook);
+  --dusk: #172742;
+  --dusk-ink: #edf0f5;
+  --dusk-muted: #a9b6cc;
+  --dusk-line: #34486a;
 }
 
 html {
@@ -77,7 +93,7 @@ body {
     font-variation-settings: "SOFT" 100, "WONK" 1;
   }
 
-  /* Body links: a sandstone underline that sits low and thickens on hover. */
+  /* Body links: a chinook-orange underline that sits low and thickens on hover. */
   .link {
     text-decoration-line: underline;
     text-decoration-color: var(--sandstone);
