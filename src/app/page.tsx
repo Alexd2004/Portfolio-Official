@@ -17,7 +17,7 @@ export default function Home() {
         <Projects />
         <Skills />
         <Credentials />
-        <div className="h-8 md:h-12" aria-hidden />
+        {/* The dusk band starts here and runs through the footer. */}
         <OffTheClock />
       </main>
       <Footer />

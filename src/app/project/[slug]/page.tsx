@@ -32,7 +32,7 @@ export default function ProjectPage({ params }: Params) {
   return (
     <>
       <Header home={false} />
-      <main className="mx-auto max-w-site px-6 pb-24 pt-12 md:px-10 md:pb-32 md:pt-16">
+      <main className="mx-auto max-w-site px-6 pb-12 pt-12 md:px-10 md:pb-20 md:pt-16">
         <Link href="/#projects" className="link text-[15px] text-slate hover:text-spruce">
           ← All projects
         </Link>
@@ -125,7 +125,7 @@ export default function ProjectPage({ params }: Params) {
 
         <nav
           aria-label="Other projects"
-          className="mt-24 flex flex-col gap-3 border-t border-frost pt-8 text-[15px] sm:flex-row sm:justify-between md:mt-32"
+          className="mt-20 flex flex-col gap-3 border-t border-frost pt-8 text-[15px] sm:flex-row sm:justify-between md:mt-28"
         >
           {prev ? (
             <Link href={`/project/${prev.slug}`} className="link text-slate hover:text-spruce">
@@ -141,7 +141,7 @@ export default function ProjectPage({ params }: Params) {
           )}
         </nav>
       </main>
-      <Footer />
+      <Footer standalone />
     </>
   );
 }
