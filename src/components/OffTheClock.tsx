@@ -1,5 +1,6 @@
 import { personal } from "@/data/site";
 import { Section } from "./Section";
+import { Reveal } from "./motion/Reveal";
 
 /**
  * The page goes from pale sky to dusk here, and stays on dusk through the
@@ -20,18 +21,18 @@ export function OffTheClock() {
         dusk
         className="pb-10 md:pb-14"
       >
-        <p className="max-w-measure font-display text-[1.375rem] leading-[1.4] text-dusk-ink text-pretty md:text-[1.5rem]">
+        <Reveal as="p" className="max-w-measure font-display text-[1.375rem] leading-[1.4] text-dusk-ink text-pretty md:text-[1.5rem]">
           {personal.lede}
-        </p>
+        </Reveal>
 
         <dl className="mt-10 max-w-measure space-y-5 md:mt-12">
-          {personal.interests.map((it) => (
-            <div key={it.label} className="md:grid md:grid-cols-[9.5rem_minmax(0,1fr)] md:gap-x-8">
+          {personal.interests.map((it, i) => (
+            <Reveal key={it.label} delay={i * 60} className="md:grid md:grid-cols-[9.5rem_minmax(0,1fr)] md:gap-x-8">
               <dt className="text-[14px] leading-6 text-dusk-muted md:pt-[0.15rem]">{it.label}</dt>
               <dd className="mt-0.5 text-[17px] leading-relaxed text-dusk-ink text-pretty md:mt-0">
                 {it.note}
               </dd>
-            </div>
+            </Reveal>
           ))}
         </dl>
       </Section>

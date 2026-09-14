@@ -1,5 +1,9 @@
 import Image from "next/image";
+import type { CSSProperties } from "react";
 import { site } from "@/data/site";
+
+/* Page-load sequence. Delays in ms; see the motion block in globals.css. */
+const at = (ms: number) => ({ "--d": `${ms}ms` } as CSSProperties);
 
 /**
  * Name, photo, one spoken sentence, the resume, then the longer version.
@@ -18,7 +22,10 @@ export function Hero() {
     <section className="mx-auto max-w-site px-6 pb-12 pt-12 md:px-10 md:pb-20 md:pt-20 lg:pt-24">
       <div className="grid gap-y-10 lg:grid-cols-[minmax(0,1fr)_21rem] lg:gap-x-16 xl:grid-cols-[minmax(0,1fr)_24rem]">
         {/* 1. The name. */}
-        <h1 className="display-wonk font-display text-[clamp(3.5rem,10vw,7.25rem)] font-medium leading-[0.92] tracking-[-0.025em] text-spruce lg:col-start-1">
+        <h1
+          className="arrive display-wonk font-display text-[clamp(3.5rem,10vw,7.25rem)] font-medium leading-[0.92] tracking-[-0.025em] text-spruce lg:col-start-1"
+          style={at(0)}
+        >
           Alexandre
           <br />
           Duteau
@@ -28,7 +35,8 @@ export function Hero() {
         <figure className="lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:mt-2">
           <div className="relative mr-4 sm:max-w-[24rem] lg:mr-0 lg:max-w-none">
             <div
-              className="absolute -bottom-4 -right-4 left-5 top-5 bg-sky md:-bottom-6 md:-right-6 md:left-6 md:top-6"
+              className="arrive-settle sky-drift absolute -bottom-4 -right-4 left-5 top-5 bg-sky md:-bottom-6 md:-right-6 md:left-6 md:top-6"
+              style={at(420)}
               aria-hidden
             />
             <Image
@@ -38,23 +46,30 @@ export function Hero() {
               height={1200}
               priority
               sizes="(min-width: 1280px) 384px, (min-width: 1024px) 336px, (min-width: 640px) 384px, 100vw"
-              className="relative aspect-[3/4] w-full object-cover object-[50%_30%]"
+              className="arrive relative aspect-[3/4] w-full object-cover object-[50%_30%]"
+              style={at(260)}
             />
           </div>
-          <figcaption className="mt-8 font-display text-[15px] italic text-slate sm:max-w-[24rem] md:mt-10 lg:max-w-none">
+          <figcaption
+            className="arrive mt-8 font-display text-[15px] italic text-slate sm:max-w-[24rem] md:mt-10 lg:max-w-none"
+            style={at(560)}
+          >
             {site.photo.caption}
           </figcaption>
         </figure>
 
         {/* 3. The sentence, the resume, the longer version. */}
         <div className="lg:col-start-1 lg:row-span-2 lg:row-start-2">
-          <p className="max-w-[36rem] font-display text-[1.375rem] leading-[1.35] text-spruce text-pretty md:text-[1.65rem] xl:text-[1.75rem]">
+          <p
+            className="arrive max-w-[36rem] font-display text-[1.375rem] leading-[1.35] text-spruce text-pretty md:text-[1.65rem] xl:text-[1.75rem]"
+            style={at(140)}
+          >
             {site.intro}
           </p>
 
           {/* The one thing a visitor is most likely here for, set at display
               size so it reads as the primary action without a button chrome. */}
-          <ul className="mt-8 flex flex-wrap items-baseline gap-x-7 gap-y-3 md:mt-10">
+          <ul className="arrive mt-8 flex flex-wrap items-baseline gap-x-7 gap-y-3 md:mt-10" style={at(480)}>
             <li>
               <a
                 href={site.resume}
@@ -81,14 +96,17 @@ export function Hero() {
             </li>
           </ul>
 
-          <p className="mt-10 max-w-measure text-[17px] leading-[1.6] text-spruce text-pretty md:mt-12">
+          <p className="arrive mt-10 max-w-measure text-[17px] leading-[1.6] text-spruce text-pretty md:mt-12" style={at(340)}>
             {bio}
           </p>
         </div>
 
         {/* 4. The "with friends" half of the bio. On a laptop it's a note under
             the photo; on a phone it follows the paragraph above. */}
-        <p className="-mt-2 max-w-measure text-[15px] leading-[1.6] text-slate text-pretty lg:col-start-2 lg:row-start-3 lg:-mt-4 lg:max-w-none">
+        <p
+          className="arrive -mt-2 max-w-measure text-[15px] leading-[1.6] text-slate text-pretty lg:col-start-2 lg:row-start-3 lg:-mt-4 lg:max-w-none"
+          style={at(620)}
+        >
           {aside}
         </p>
       </div>

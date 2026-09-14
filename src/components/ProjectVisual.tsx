@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { Project } from "@/data/projects";
+import { CountUp } from "./motion/CountUp";
 
 export type VisualVariant = "compact" | "featured" | "lead";
 
@@ -88,7 +89,7 @@ export function ProjectVisual({
 
     return (
       <div
-        className={`flex w-full flex-col justify-end bg-arch ${panel} ${pad}`}
+        className={`sky-drift flex w-full flex-col justify-end bg-arch ${panel} ${pad}`}
         aria-label={`${project.figure.value} ${project.figure.label}`}
         role="img"
       >
@@ -101,9 +102,9 @@ export function ProjectVisual({
           aria-hidden
         >
           <span
-            className={`display-wonk font-display font-medium leading-[0.9] tracking-[-0.03em] text-gold ${value}`}
+            className={`display-wonk font-display font-medium leading-[0.9] tracking-[-0.03em] text-gold transition-colors duration-200 group-hover:text-chinook ${value}`}
           >
-            {project.figure.value}
+            <CountUp value={project.figure.value} />
           </span>
           <span className={`font-display italic leading-snug text-dusk-ink ${label}`}>
             {project.figure.label}

@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { projects, moreWork, type Project } from "@/data/projects";
 import { Section } from "./Section";
 import { ProjectVisual } from "./ProjectVisual";
+import { Reveal } from "./motion/Reveal";
 
 function Meta({ project }: { project: Project }) {
   return (
@@ -55,7 +56,7 @@ function Links({ project, className = "" }: { project: Project; className?: stri
 function Title({ project, className }: { project: Project; className: string }) {
   return (
     <h3 className={`display-soft font-display font-medium leading-[1.05] text-spruce text-balance ${className}`}>
-      <Link href={`/project/${project.slug}`} className="transition-colors hover:text-sandstone">
+      <Link href={`/project/${project.slug}`} className="underline-draw transition-colors hover:text-sandstone">
         {project.title}
       </Link>
     </h3>
@@ -64,7 +65,11 @@ function Title({ project, className }: { project: Project; className: string }) 
 
 function VisualLink({ project, children }: { project: Project; children: ReactNode }) {
   return (
-    <Link href={`/project/${project.slug}`} aria-label={`${project.title} — details`} className="block">
+    <Link
+      href={`/project/${project.slug}`}
+      aria-label={`${project.title} — details`}
+      className="group block transition-transform duration-200 ease-out hover:-translate-y-0.5"
+    >
       {children}
     </Link>
   );
@@ -73,7 +78,7 @@ function VisualLink({ project, children }: { project: Project; children: ReactNo
 /** The two current pieces: a full-column panel, then the text underneath in two columns. */
 function Featured({ project, priority }: { project: Project; priority: boolean }) {
   return (
-    <li>
+    <Reveal as="li">
       <div className="xl:-mr-6">
         <VisualLink project={project}>
           <ProjectVisual
@@ -98,14 +103,17 @@ function Featured({ project, priority }: { project: Project; priority: boolean }
           <Links project={project} className="mt-4 md:flex-col md:gap-y-1.5" />
         </div>
       </div>
-    </li>
+    </Reveal>
   );
 }
 
 /** Everything else: the side-panel entry, kept tight so seven of them don't drone. */
 function Entry({ project }: { project: Project }) {
   return (
-    <li className="grid gap-y-5 sm:grid-cols-[minmax(0,1fr)_14rem] sm:gap-x-8 lg:grid-cols-[minmax(0,1fr)_16rem] xl:grid-cols-[minmax(0,1fr)_18rem] xl:gap-x-12">
+    <Reveal
+      as="li"
+      className="grid gap-y-5 sm:grid-cols-[minmax(0,1fr)_14rem] sm:gap-x-8 lg:grid-cols-[minmax(0,1fr)_16rem] xl:grid-cols-[minmax(0,1fr)_18rem] xl:gap-x-12"
+    >
       <div className="max-w-measure">
         <Meta project={project} />
         <Title project={project} className="mt-1.5 text-[1.5rem] md:text-[1.7rem]" />
@@ -118,7 +126,7 @@ function Entry({ project }: { project: Project }) {
           <ProjectVisual project={project} variant="compact" sizes="(min-width: 1280px) 288px, (min-width: 640px) 224px, 100vw" />
         </VisualLink>
       </div>
-    </li>
+    </Reveal>
   );
 }
 
@@ -152,8 +160,8 @@ export function Projects() {
           Services and builds worth a line each.
         </p>
         <ul className="mt-8 grid gap-x-10 gap-y-8 md:grid-cols-2">
-          {moreWork.map((w) => (
-            <li key={w.title} className="max-w-[26rem]">
+          {moreWork.map((w, i) => (
+            <Reveal as="li" key={w.title} delay={(i % 2) * 70} className="max-w-[26rem]">
               <h4 className="text-[16px] font-medium text-spruce">
                 {w.github ? (
                   <a href={w.github} target="_blank" rel="noopener noreferrer" className="link">
@@ -165,7 +173,7 @@ export function Projects() {
               </h4>
               <p className="mt-1.5 text-[15px] leading-relaxed text-slate text-pretty">{w.detail}</p>
               <p className="mt-1.5 text-[13px] text-slate/80">{w.stack}</p>
-            </li>
+            </Reveal>
           ))}
         </ul>
       </div>

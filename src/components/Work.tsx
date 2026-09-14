@@ -1,12 +1,13 @@
 import { experience, education } from "@/data/experience";
 import { Section } from "./Section";
+import { Reveal } from "./motion/Reveal";
 
 export function Work() {
   return (
     <Section id="work" title="Work" lede="Two years of shipping, most of it backend.">
       <ol className="space-y-14 md:space-y-16">
         {experience.map((job) => (
-          <li key={`${job.org}-${job.role}`} className="md:grid md:grid-cols-entry md:gap-x-8">
+          <Reveal as="li" key={`${job.org}-${job.role}`} className="md:grid md:grid-cols-entry md:gap-x-8">
             {/* Dates hang in the left gutter on desktop. */}
             <p className="text-[14px] leading-6 text-slate md:pt-[0.3rem]">
               {job.start}
@@ -45,10 +46,10 @@ export function Work() {
                 ))}
               </ul>
             </div>
-          </li>
+          </Reveal>
         ))}
 
-        <li className="md:grid md:grid-cols-entry md:gap-x-8">
+        <Reveal as="li" className="md:grid md:grid-cols-entry md:gap-x-8">
           <p className="text-[14px] leading-6 text-slate md:pt-[0.3rem]">
             {education.start}
             <span className="text-frost"> — </span>
@@ -60,7 +61,7 @@ export function Work() {
             </h3>
             <p className="mt-1 text-[15px] text-slate">{education.school}</p>
           </div>
-        </li>
+        </Reveal>
       </ol>
     </Section>
   );
