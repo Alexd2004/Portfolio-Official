@@ -16,7 +16,6 @@ export const site = {
   photo: {
     src: "/img/personal.webp",
     alt: "Alexandre Duteau at night in front of the Arc de Triomphe",
-    caption: "Paris, for once. Home is Calgary.",
   },
 } as const;
 
@@ -37,6 +36,7 @@ export const personal = {
 
 export const nav = [
   { label: "Work", href: "#work" },
+  { label: "Education", href: "#education" },
   { label: "Projects", href: "#projects" },
   { label: "Skills", href: "#skills" },
   { label: "Credentials", href: "#credentials" },

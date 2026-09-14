@@ -50,12 +50,6 @@ export function Hero() {
               style={at(260)}
             />
           </div>
-          <figcaption
-            className="arrive mt-8 font-display text-[15px] italic text-slate sm:max-w-[24rem] md:mt-10 lg:max-w-none"
-            style={at(560)}
-          >
-            {site.photo.caption}
-          </figcaption>
         </figure>
 
         {/* 3. The sentence, the resume, the longer version. */}
