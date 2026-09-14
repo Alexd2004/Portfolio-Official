@@ -107,3 +107,115 @@ body {
     color: var(--dusk-muted);
   }
 }
+
+/* ---------------------------------------------------------------------------
+   motion
+
+   Everything below is transform + opacity only, so nothing here can shift
+   layout. The reduced-motion block near the top of this file already zeroes
+   every animation and transition; the reveal rules additionally gate their
+   hidden state on (prefers-reduced-motion: no-preference) and (scripting:
+   enabled), so with motion off or JS off the content is simply there.
+   --------------------------------------------------------------------------- */
+
+/* One shared ease: quick start, long settle. (On html, not :root, so it
+   stays clear of the colour token block above.) */
+html {
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* Hero page-load sequence. Pure CSS: runs on paint, no JS on the path.
+   Delay per element via --d, set inline in Hero.tsx. */
+@keyframes arrive {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes settle {
+  from {
+    opacity: 0;
+    transform: translate(-10px, -10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.arrive {
+  animation: arrive 640ms var(--ease-out) both;
+  animation-delay: var(--d, 0ms);
+}
+.arrive-settle {
+  animation: settle 720ms var(--ease-out) both;
+  animation-delay: var(--d, 0ms);
+}
+
+/* Scroll reveals (Reveal.tsx) and figure count-ups (CountUp.tsx). */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(12px);
+    transition:
+      opacity 440ms var(--ease-out),
+      transform 440ms var(--ease-out);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  [data-reveal].is-in {
+    opacity: 1;
+    transform: none;
+  }
+  [data-countup] {
+    opacity: 0;
+    transition: opacity 320ms var(--ease-out);
+  }
+  [data-countup].is-in {
+    opacity: 1;
+  }
+}
+
+/* Hover: a sandstone rule that draws in from the left under project titles.
+   Cloned per line so wrapped titles get a rule on every line. */
+.underline-draw {
+  background-image: linear-gradient(var(--sandstone), var(--sandstone));
+  background-repeat: no-repeat;
+  background-size: 0% 2px;
+  background-position: 0 100%;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  transition:
+    background-size 220ms var(--ease-out),
+    color 180ms ease;
+}
+.underline-draw:hover,
+.underline-draw:focus-visible {
+  background-size: 100% 2px;
+}
+
+/* Ambient: the sky panels drift, very slowly, the way a chinook arch does.
+   A few percent of white and dusk mixed into the sky token, so it follows
+   whatever the sky colour is. Static on browsers without color-mix. */
+@keyframes sky-drift {
+  from {
+    background-position: 0% 50%;
+  }
+  to {
+    background-position: 100% 50%;
+  }
+}
+@supports (background: color-mix(in srgb, red, blue)) {
+  .sky-drift {
+    background-image: linear-gradient(
+      115deg,
+      color-mix(in srgb, var(--sky) 91%, white) 0%,
+      var(--sky) 45%,
+      color-mix(in srgb, var(--sky) 94%, var(--dusk)) 100%
+    );
+    background-size: 220% 220%;
+    animation: sky-drift 32s ease-in-out infinite alternate;
+  }
+}
