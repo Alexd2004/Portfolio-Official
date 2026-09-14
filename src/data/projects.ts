@@ -15,13 +15,11 @@ export type Project = {
   /** Typographic stand-in for projects without a screenshot. Values are lifted from the verified copy above. */
   figure?: { value: string; label: string };
   /** The two most current pieces get the larger treatment in the list. */
-  featured?: boolean;
 };
 
 export const projects: Project[] = [
   {
     slug: "urbansignal",
-    featured: true,
     title: "UrbanSignal",
     kind: "Full-Stack",
     accent: "#4f8fe0",
@@ -44,7 +42,6 @@ export const projects: Project[] = [
   },
   {
     slug: "micro-drone",
-    featured: true,
     title: "Micro Quadcopter",
     kind: "Embedded",
     accent: "#5fbf9a",

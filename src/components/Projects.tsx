@@ -75,40 +75,8 @@ function VisualLink({ project, children }: { project: Project; children: ReactNo
   );
 }
 
-/** The two current pieces: a full-column panel, then the text underneath in two columns. */
-function Featured({ project, priority }: { project: Project; priority: boolean }) {
-  return (
-    <Reveal as="li">
-      <div className="xl:-mr-6">
-        <VisualLink project={project}>
-          <ProjectVisual
-            project={project}
-            variant="featured"
-            priority={priority}
-            sizes="(min-width: 1280px) 880px, (min-width: 1024px) 60vw, 100vw"
-          />
-        </VisualLink>
-      </div>
-
-      <div className="mt-7 grid gap-y-5 md:grid-cols-[minmax(0,1fr)_15rem] md:gap-x-12 lg:grid-cols-[minmax(0,1fr)_16rem]">
-        <div className="max-w-measure">
-          <Meta project={project} />
-          <Title project={project} className="mt-2 text-[2.25rem] md:text-[2.75rem]" />
-          <p className="mt-4 text-[17px] leading-[1.6] text-spruce text-pretty md:text-[18px]">
-            {project.tagline}
-          </p>
-        </div>
-        <div className="md:pt-1.5">
-          <Stack project={project} className="max-w-[26rem]" />
-          <Links project={project} className="mt-4 md:flex-col md:gap-y-1.5" />
-        </div>
-      </div>
-    </Reveal>
-  );
-}
-
-/** Everything else: the side-panel entry, kept tight so seven of them don't drone. */
-function Entry({ project }: { project: Project }) {
+/** One format for every project: text on the left, visual in a side panel. */
+function Entry({ project, priority = false }: { project: Project; priority?: boolean }) {
   return (
     <Reveal
       as="li"
@@ -123,7 +91,7 @@ function Entry({ project }: { project: Project }) {
       </div>
       <div className="order-first sm:order-last sm:self-start xl:-mr-6">
         <VisualLink project={project}>
-          <ProjectVisual project={project} variant="compact" sizes="(min-width: 1280px) 288px, (min-width: 640px) 224px, 100vw" />
+          <ProjectVisual project={project} variant="compact" priority={priority} sizes="(min-width: 1280px) 288px, (min-width: 640px) 224px, 100vw" />
         </VisualLink>
       </div>
     </Reveal>
@@ -131,24 +99,15 @@ function Entry({ project }: { project: Project }) {
 }
 
 export function Projects() {
-  const featured = projects.filter((p) => p.featured);
-  const rest = projects.filter((p) => !p.featured);
-
   return (
     <Section
       id="projects"
       title="Projects"
       lede="Two hackathons, a data pipeline, some coursework I still like, and a drone."
     >
-      <ol className="space-y-20 md:space-y-24">
-        {featured.map((p, i) => (
-          <Featured key={p.slug} project={p} priority={i === 0} />
-        ))}
-      </ol>
-
-      <ol className="mt-20 space-y-12 border-t border-frost pt-14 md:mt-24 md:space-y-14 md:pt-16">
-        {rest.map((p) => (
-          <Entry key={p.slug} project={p} />
+      <ol className="space-y-12 md:space-y-14">
+        {projects.map((p, i) => (
+          <Entry key={p.slug} project={p} priority={i === 0} />
         ))}
       </ol>
 

@@ -41,7 +41,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${fraunces.variable} ${karla.variable}`}>
-      <body className="font-sans">{children}</body>
+      <body id="top" className="font-sans">{children}</body>
     </html>
   );
 }

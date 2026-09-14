@@ -10,37 +10,39 @@ type Props = {
 };
 
 /**
- * The end of the page, set like the sign-off of a letter: the name and place
- * in the title column, then a short line, the three ways to get in touch,
- * and the colophon. Same grid as every section above it.
+ * The end of the page. The email is the one thing a visitor might act on
+ * here, so it gets the same treatment as the resume link in the hero: display
+ * size, the chinook underline. Everything else is secondary and sits under it.
+ * Same grid as every section above.
  */
 export function Footer({ standalone = false }: Props) {
+  const year = new Date().getFullYear();
+
   return (
     <footer className="bg-dusk text-dusk-ink">
       <div className="mx-auto max-w-site px-6 md:px-10">
         <div
-          className={`grid gap-y-8 pb-12 md:pb-16 lg:grid-cols-section lg:gap-x-16 ${
-            standalone ? "pt-12 md:pt-16" : "border-t border-dusk-line pt-10 md:pt-12"
+          className={`grid gap-y-10 pb-12 md:pb-16 lg:grid-cols-section lg:gap-x-16 ${
+            standalone ? "pt-12 md:pt-16" : "border-t border-dusk-line pt-10 md:pt-14"
           }`}
         >
           <div>
             <p className="display-soft font-display text-[1.35rem] font-medium leading-none">
               {site.name}
             </p>
-            <p className="mt-2.5 text-[14px] text-dusk-muted">{personal.place}</p>
+            <p className="mt-2.5 text-[14px] leading-6 text-dusk-muted">{personal.place}</p>
           </div>
 
-          <div className="max-w-measure">
-            <p className="font-display text-[1.25rem] leading-[1.4] text-dusk-ink text-pretty md:text-[1.375rem]">
-              That&rsquo;s the whole page. If any of it is useful to you, say hello.
-            </p>
+          <div>
+            <p className="text-[14px] leading-6 text-dusk-muted">Get in touch</p>
+            <a
+              href={`mailto:${site.email}`}
+              className="display-soft mt-2 inline-block break-all font-display text-[1.375rem] font-medium leading-tight text-dusk-ink underline decoration-gold decoration-2 underline-offset-[0.28em] transition-colors hover:text-gold sm:break-normal md:text-[1.75rem] lg:text-[2rem]"
+            >
+              {site.email}
+            </a>
 
-            <ul className="mt-6 flex flex-col gap-y-2 text-[15px] sm:flex-row sm:flex-wrap sm:gap-x-7">
-              <li>
-                <a href={`mailto:${site.email}`} className="link link-dusk hover:text-white">
-                  {site.email}
-                </a>
-              </li>
+            <ul className="mt-8 flex flex-wrap gap-x-7 gap-y-2 text-[15px]">
               <li>
                 <a
                   href={site.github}
@@ -61,10 +63,15 @@ export function Footer({ standalone = false }: Props) {
                   Resume (PDF) ↗
                 </a>
               </li>
+              <li>
+                <a href="#top" className="link link-dusk hover:text-white">
+                  Back to top ↑
+                </a>
+              </li>
             </ul>
 
-            <p className="mt-9 text-[13px] leading-relaxed text-dusk-muted md:mt-10">
-              {personal.colophon}
+            <p className="mt-10 text-[13px] leading-relaxed text-dusk-muted md:mt-12">
+              {personal.colophon} &middot; {year}
             </p>
           </div>
         </div>
