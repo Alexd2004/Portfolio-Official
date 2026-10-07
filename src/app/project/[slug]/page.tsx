@@ -1,140 +1,146 @@
-import { notFound } from 'next/navigation';
-import Image from 'next/image';
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import type { Metadata } from "next";
+import { projects, getProject } from "@/data/projects";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
+import { ProjectVisual } from "@/components/ProjectVisual";
 
-const projects = [
-  {
-    title: "NFL Spread Predictor",
-    bio: "An integrated full-stack application predicting NFL spreads with live data, advanced ML techniques including XGBoost, and secure user authentication.",
-    massiveBio: "This comprehensive machine learning project represents a full-stack solution for predicting NFL game spreads using advanced data science techniques. I scraped and cleaned over 7 years of NFL data, processing more than 500,000 raw statistics into a structured dataset with 64,000+ features per row, including detailed team statistics, player performance metrics, and momentum indicators.\n\nThe core utilizes XGBoost with SMOTE oversampling and custom class weights, achieving 75% balanced accuracy against Vegas betting lines. I directly integrated the trained model into a Next.js frontend using custom hooks, providing real-time predictions with confidence scores and feature importance analysis. The technical stack spans the full data science pipeline from web scraping with Python/Pandas to modern web development with Next.js.",
-    skills: ["Python", "XGBoost", "Pandas", "Scikit-learn", "BeautifulSoup (Web Scraping)","Feature Engineering", "Next.js", "Authentication", "SMOTE & Class Balancing" ],
-    image: "/images/WIP.jpg",
-    points: [
-      "Scraped and cleaned 7+ years of NFL data, processing 500,000+ raw statistics into a structured dataset. Trained XGBoost on 64,000+ features per row (e.g., team/player stats, momentum, differences, etc)",
-      "Deployed XGBoost with SMOTE oversampling and custom class weights, achieving 75% balanced accuracy against Vegas lines",
-      "Directly integrated ML model into Next.js frontend using custom hooks",
-    ],
-    github: "",
-    website: "https://alexandreduteau.com/",
-    color: "border-blue-500",
-    tag: "bg-blue-500",
-    type: "AI/ML",
-  },
-  
-  {
-    title: "Mini Solar System",
-    bio: "A 3D interactive solar system simulation built with OpenGL, featuring physically accurate orbital mechanics, Phong shading, and real-time animation.",
-    massiveBio: "This 3D solar system simulation represents a sophisticated exploration of computer graphics and physics programming using OpenGL and C++. The project creates an immersive, interactive experience that accurately models the complex orbital mechanics of our solar system while maintaining real-time performance.\n\nAt the core is a custom sphere generation algorithm with proper UV mapping for realistic textures, featuring the Sun, Earth, and Moon with unique surface mapping. The orbital mechanics utilize a hierarchical transformation system with model-view matrices to simulate realistic axial tilts, orbital inclinations, and varying periods. The lighting system employs Phong shading with ambient, diffuse, and specular components, with the Sun acting as a point light source. Performance optimization ensures smooth 60fps animation while rendering complex 3D geometry.",
-    skills: [ "C++", "OpenGL", "GLSL Shaders", "3D Transformations"],
-    image: "/images/solarSystem.png",
-    points: [
-      "Implemented sphere generation with custom geometry and UV mapping for Sun/Earth/Moon textures",
-      "Designed a transformation hierarchy for orbital mechanics (incl. axial tilt and inclination) using model-view matrices",
-      "Applied Phong shading with specular/diffuse/ambient lighting (Sun as point light source)",
-    ],
-    github: "https://github.com/Alexd2004/ChatBot-Platform",
-    website: "",
-    color: "border-red-500",
-    tag: "bg-red-500",
-    type: "Graphics",
-  },
-  {
-    title: "Self-Checkout Station",
-    bio: "A simulation of a self-checkout station for retail.",
-    massiveBio: "This Java-based self-checkout station simulation demonstrates comprehensive software engineering principles through the creation of a realistic retail automation system. The project combines graphical user interface development with complex business logic to create an intuitive and efficient checkout experience.\n\nThe GUI implementation using JavaFX provides a modern, user-friendly interface that mimics real-world self-checkout systems, featuring barcode scanning, real-time cart management, and an intuitive payment interface. The system includes sophisticated payment processing logic handling various payment methods, tax calculations, and inventory updates with proper error handling. Quality assurance is ensured through comprehensive unit testing using JUnit, covering all major functionality. The project showcases object-oriented design principles with well-structured classes and modular architecture suitable for educational and real-world applications.",
-    skills: ["Java", "JavaFX", "JUnit", "Java Swing"],
-    image: "/images/SelfCheckoutStation.png",
-    points: [
-      "GUI with barcode scanning",
-      "Automated payment logic",
-      "Unit tested with JUnit"
-    ],
-    github: "https://github.com/Alexd2004/SelfCheckoutStation",
-    website: "",
-    color: "border-purple-500",
-    tag: "bg-purple-500",
-    type: "Desktop App",
-  },
-  
+type Params = { params: { slug: string } };
 
-  {
-    title: "BillBoard",
-    bio: "A civic engagement platform helping Canadians stay informed about government policies and connect with their representatives through newsfeeds, forums, and AI assistance.",
-    massiveBio: "BillBoard represents a comprehensive civic engagement platform designed to bridge the gap between Canadian citizens and their government through technology. The platform features a newsfeed providing real-time updates on government policies from all levels, with interactive features like likes, dislikes, and comments. The community forum serves as a digital town square where users can initiate discussions, launch polls, and create petitions.\n\nA standout feature is the interactive map helping users identify their representatives at all government levels, integrating with government databases for accurate information. Billy, the AI assistant using OpenAI's API, explains Canadian law and policy language in plain language. The technical implementation showcases modern full-stack development with React, Next.js, TypeScript, and Supabase with PostgreSQL. This project placed approximately 16th at Hack the Change 2024.",
-    skills: [
-      "React", "Next.js", "Typescript", "TailwindCSS", "Supabase", "Leaflet.js", "OpenAI API", "PostgreSQL"
-    ],
-    image: "/images/billBoard.png",
-    points: [
-      "Newsfeed for Policy Updates: Real-time updates on new and proposed policies from all levels of government, with interactive features (like, dislike, comment)",
-      "Community Forum: Users can post discussion boards, launch polls, and create petitions to rally support and discuss issues relevant to their communities.",
-      "Hack the Change 2024 Submission (Placed ~16th out of all projects)."
-    ],
-    github: "",
-    website: "",
-    color: "border-blue-500",
-    tag: "bg-blue-500",
-    type: "Full-Stack",
-  },
-];
-
-function slugify(title: string) {
-  return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+export function generateStaticParams() {
+  return projects.map((p) => ({ slug: p.slug }));
 }
 
-export default function ProjectDetailPage({ params }: { params: { slug: string } }) {
-  const project = projects.find(
-    (p) => slugify(p.title) === params.slug
-  );
+export function generateMetadata({ params }: Params): Metadata {
+  const project = getProject(params.slug);
+  if (!project) return {};
+  return {
+    title: project.title,
+    description: project.tagline,
+  };
+}
 
-  if (!project) {
-    return (
-      <div className="bg-[#2c2c2c] min-h-screen w-full">
-        <div className="flex flex-col items-center justify-center min-h-[60vh] text-white">
-          <h1 className="text-3xl font-bold mb-4">Project not found</h1>
-          <p className="text-gray-400">Sorry, we couldn&apos;t find the project you&apos;re looking for.</p>
-        </div>
-      </div>
-    );
-  }
+export default function ProjectPage({ params }: Params) {
+  const project = getProject(params.slug);
+  if (!project) notFound();
+
+  const index = projects.findIndex((p) => p.slug === project.slug);
+  const prev = index > 0 ? projects[index - 1] : undefined;
+  const next = index < projects.length - 1 ? projects[index + 1] : undefined;
 
   return (
-    <div className="bg-[#2c2c2c] min-h-screen w-full">
-      <div className="flex flex-col items-center max-w-2xl mx-auto py-12 px-4 text-white">
-        <div className="w-full flex flex-col items-center mb-8">
-          <div className={`bg-[#232323] border-l-8 ${project.color} rounded-xl overflow-hidden h-70 w-full max-w-2xl`}>
-            <Image src={project.image} alt={project.title} width={600} height={400} className="rounded-r-xl object-contain w-full h-full" />
+    <>
+      <Header home={false} />
+      <main className="mx-auto max-w-site px-6 pb-12 pt-12 md:px-10 md:pb-20 md:pt-16">
+        <Link href="/#projects" className="link inline-block text-[15px] text-slate transition-colors hover:text-spruce">
+          ← All projects
+        </Link>
+
+        <header className="mt-10 lg:grid lg:grid-cols-section lg:gap-x-16">
+          <p className="text-[14px] leading-6 text-slate lg:pt-3">
+            {project.kind}
+            {project.status === "in-progress" && (
+              <>
+                <br />
+                <span className="text-sandstone">In progress</span>
+              </>
+            )}
+            {project.context && (
+              <>
+                <br />
+                {project.context}
+              </>
+            )}
+          </p>
+          <div className="mt-4 lg:mt-0">
+            <h1 className="display-wonk font-display text-[clamp(2.75rem,7vw,5rem)] font-medium leading-[0.98] tracking-[-0.02em] text-spruce text-balance">
+              {project.title}
+            </h1>
+            <p className="mt-6 max-w-[38rem] font-display text-[1.375rem] leading-[1.35] text-spruce text-pretty md:text-[1.5rem]">
+              {project.tagline}
+            </p>
+          </div>
+        </header>
+
+        {/* The lead figure runs the full container width, breaking the
+            two-column grid the way the hero photo breaks the measure. */}
+        <div className="mt-12 md:mt-16 xl:-mx-6">
+          <ProjectVisual project={project} variant="lead" priority sizes="(min-width: 1280px) 1216px, 100vw" />
+        </div>
+
+        <div className="mt-12 grid gap-y-10 md:mt-16 lg:grid-cols-section lg:gap-x-16">
+          <aside className="space-y-9 lg:sticky lg:top-12 lg:self-start">
+            <div>
+              <h2 className="display-soft font-display text-[1.25rem] font-medium text-spruce">Highlights</h2>
+              <ul className="dash-list mt-3 space-y-2.5 text-[15px] leading-relaxed text-slate">
+                {project.points.map((pt) => (
+                  <li key={pt} className="text-pretty">
+                    {pt}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h2 className="display-soft font-display text-[1.25rem] font-medium text-spruce">Stack</h2>
+              <p className="mt-3 text-[15px] leading-relaxed text-slate">{project.stack.join(", ")}</p>
+            </div>
+            {(project.github || project.website) && (
+              <ul className="flex flex-wrap gap-x-6 gap-y-1 text-[15px] lg:flex-col">
+                {project.website && (
+                  <li>
+                    <a
+                      href={project.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="link font-medium text-spruce"
+                    >
+                      Live site ↗
+                    </a>
+                  </li>
+                )}
+                {project.github && (
+                  <li>
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="link text-spruce"
+                    >
+                      Source on GitHub ↗
+                    </a>
+                  </li>
+                )}
+              </ul>
+            )}
+          </aside>
+
+          <div className="max-w-measure space-y-6 text-[17px] leading-[1.65] text-spruce text-pretty">
+            {project.description.map((p) => (
+              <p key={p}>{p}</p>
+            ))}
           </div>
         </div>
-        <div className="flex justify-center items-center gap-4 mb-2">
-          <h1 className="font-playfair text-3xl font-bold text-center">{project.title}</h1>
-          <span className={`px-3 py-1 rounded-full text-sm font-semibold text-white ${project.tag}`}>
-            {project.type}
-          </span>
-        </div>
-        <p className="text-gray-300 text-lg mb-4 text-center">{project.bio}</p>
-        <div className="flex flex-wrap gap-1 mb-6 justify-center">
-          {project.skills.map((skill, i) => (
-            <span key={i} className="px-3 py-1 bg-gray-600 text-white text-sm rounded-full">
-              {skill}
-            </span>
-          ))}
-        </div>
-        <div className="w-full max-w-3xl mx-auto space-y-6 mb-6">
-          {project.massiveBio.split('\n\n').map((paragraph, i) => (
-            <p key={i} className="text-gray-300 text-base leading-relaxed">
-              {paragraph}
-            </p>
-          ))}
-        </div>
-        <div className="flex flex-row gap-4 mt-2">
-          {project.github && (
-            <a href={project.github} target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300 underline">GitHub</a>
+
+        <nav
+          aria-label="Other projects"
+          className="mt-20 flex flex-col gap-3 border-t border-frost pt-8 text-[15px] sm:flex-row sm:justify-between md:mt-28"
+        >
+          {prev ? (
+            <Link href={`/project/${prev.slug}`} className="link text-slate hover:text-spruce">
+              ← {prev.title}
+            </Link>
+          ) : (
+            <span />
           )}
-          {project.website && (
-            <a href={project.website} target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300 underline">Live Demo</a>
+          {next && (
+            <Link href={`/project/${next.slug}`} className="link text-slate hover:text-spruce sm:text-right">
+              {next.title} →
+            </Link>
           )}
-        </div>
-      </div>
-    </div>
+        </nav>
+      </main>
+      <Footer standalone />
+    </>
   );
-} 
+}

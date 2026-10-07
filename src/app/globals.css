@@ -2,82 +2,236 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+  Calgary, late winter, a chinook coming through.
+
+  The picture: a chinook arch. A hard bank of blue-grey cloud across the
+  western sky, and under it a band of clear light going gold and then orange
+  over the Rockies. Snow on the ground, spruce in the yards. That one view
+  supplies every colour here.
+
+  snow       the ground. Bright snow under a clearing sky: cool, near-white,
+             not cream.
+  sky        the pale tinted surface. Clear winter sky, an actual blue this
+             time rather than a grey one, so it separates from the snow.
+  frost      hairlines.
+  spruce     the ink. Spruce in shadow instead of black.
+  slate      secondary text. River stone, the Bow in March.
+  chinook    the accent. The orange at the bottom of the arch, deepened so it
+             holds up at text size on snow. Links, bullets, focus, "in progress".
+  gold       the same light before it goes orange. Only used on dark ground:
+             the big figures on the project panels.
+  arch       the cloud bank itself. Blue-slate, the project figure panels.
+  dusk       the night side of the same sky, an hour later. The "Off the
+             clock" band and the footer.
+  sandstone  kept as a name for the accent; it now points at chinook.
+*/
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --snow: #f4f6f3;
+  --sky: #c3d8ea;
+  --frost: #d0d8d6;
+  --spruce: #142a21;
+  --slate: #4f6068;
+  --chinook: #b54a12;
+  --gold: #f0b552;
+  --arch: #2c4160;
+  --sandstone: var(--chinook);
+  --dusk: #172742;
+  --dusk-ink: #edf0f5;
+  --dusk-muted: #a9b6cc;
+  --dusk-line: #34486a;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 2rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
   }
 }
 
 body {
-  
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: var(--snow);
+  color: var(--spruce);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-optical-sizing: auto;
+}
+
+::selection {
+  background: var(--sky);
+  color: var(--spruce);
+}
+
+:focus-visible {
+  outline: 2px solid var(--sandstone);
+  outline-offset: 3px;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* Fraunces at display sizes: soften the serifs, let the wonky glyphs in. */
+  .display-soft {
+    font-variation-settings: "SOFT" 40, "WONK" 1;
+  }
+  .display-wonk {
+    font-variation-settings: "SOFT" 100, "WONK" 1;
+  }
+
+  /* Body links: a chinook-orange underline that sits low and thickens on hover. */
+  .link {
+    text-decoration-line: underline;
+    text-decoration-color: var(--sandstone);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+    transition: text-decoration-thickness 120ms ease, color 120ms ease;
+  }
+  .link:hover {
+    text-decoration-thickness: 2px;
+  }
+  .link.link-dusk {
+    text-decoration-color: var(--dusk-muted);
+  }
+
+  /* En-dash bullets, hung into the left gutter. */
+  .dash-list > li {
+    position: relative;
+    padding-left: 1.25rem;
+  }
+  .dash-list > li::before {
+    content: "\2013";
+    position: absolute;
+    left: 0;
+    color: var(--sandstone);
+  }
+  .dash-list-dusk > li::before {
+    color: var(--dusk-muted);
+  }
 }
 
-.landing-page-bg {
-  background-image: url("/images/landingPage.png");
-  background-color: #cabbb6;
+/* ---------------------------------------------------------------------------
+   motion
+
+   Everything below is transform + opacity only, so nothing here can shift
+   layout. The reduced-motion block near the top of this file already zeroes
+   every animation and transition; the reveal rules additionally gate their
+   hidden state on (prefers-reduced-motion: no-preference) and (scripting:
+   enabled), so with motion off or JS off the content is simply there.
+   --------------------------------------------------------------------------- */
+
+/* One shared ease: quick start, long settle. (On html, not :root, so it
+   stays clear of the colour token block above.) */
+html {
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
-.AD{
-  font-style: italic;
-  /* font-size: 27px; */
-  background-color: #ff8177;
-  background-image: linear-gradient(to top, #ff0844 25%, #cabbb6 75%);
-  background-size: 100%;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-text-fill-color: transparent;
-
-
+/* Hero page-load sequence. Pure CSS: runs on paint, no JS on the path.
+   Delay per element via --d, set inline in Hero.tsx. */
+@keyframes arrive {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes settle {
+  from {
+    opacity: 0;
+    transform: translate(-10px, -10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.arrive {
+  animation: arrive 640ms var(--ease-out) both;
+  animation-delay: var(--d, 0ms);
+}
+.arrive-settle {
+  animation: settle 720ms var(--ease-out) both;
+  animation-delay: var(--d, 0ms);
 }
 
-
-
-.UNI{
-  font-style: italic;
-  /* font-size: 27px; */
-  background-color: #ff8177;
-  background-image: linear-gradient(to top, #ff0844 25%, #cabbb6 75%);
-  background-size: 100%;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-text-fill-color: transparent;
-
-
+/* Scroll reveals (Reveal.tsx) and figure count-ups (CountUp.tsx). */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(12px);
+    transition:
+      opacity 440ms var(--ease-out),
+      transform 440ms var(--ease-out);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  [data-reveal].is-in {
+    opacity: 1;
+    transform: none;
+  }
+  [data-countup] {
+    opacity: 0;
+    transition: opacity 320ms var(--ease-out);
+  }
+  [data-countup].is-in {
+    opacity: 1;
+  }
 }
 
+/* Hover: a sandstone rule that draws in from the left under project titles.
+   Cloned per line so wrapped titles get a rule on every line. */
+.underline-draw {
+  background-image: linear-gradient(var(--sandstone), var(--sandstone));
+  background-repeat: no-repeat;
+  background-size: 0% 2px;
+  background-position: 0 100%;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  transition:
+    background-size 220ms var(--ease-out),
+    color 180ms ease;
+}
+.underline-draw:hover,
+.underline-draw:focus-visible {
+  background-size: 100% 2px;
+}
 
-
-.skillerbanner__container {
-  background-color: #ff8177;
-  background-image: linear-gradient(to top, #ff0844 0%, #ffb199 100%);
-  background-size: 100%;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-text-fill-color: transparent;
-  display: inline-block; /* Make the block inline to correctly center it vertically */
-  vertical-align: middle; 
+/* Ambient: the sky panels drift, very slowly, the way a chinook arch does.
+   A few percent of white and dusk mixed into the sky token, so it follows
+   whatever the sky colour is. Static on browsers without color-mix. */
+@keyframes sky-drift {
+  from {
+    background-position: 0% 50%;
+  }
+  to {
+    background-position: 100% 50%;
+  }
+}
+@supports (background: color-mix(in srgb, red, blue)) {
+  .sky-drift {
+    background-image: linear-gradient(
+      115deg,
+      color-mix(in srgb, var(--sky) 91%, white) 0%,
+      var(--sky) 45%,
+      color-mix(in srgb, var(--sky) 94%, var(--dusk)) 100%
+    );
+    background-size: 220% 220%;
+    animation: sky-drift 32s ease-in-out infinite alternate;
+  }
 }

@@ -8,14 +8,34 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      fontFamily: {
-        'eb-garamond': ['var(--font-eb-garamond)', 'serif'],
-        'playfair': ['var(--font-playfair)', 'serif'],
+      colors: {
+        snow: "var(--snow)",
+        sky: "var(--sky)",
+        frost: "var(--frost)",
+        spruce: "var(--spruce)",
+        slate: "var(--slate)",
+        sandstone: "var(--sandstone)",
+        chinook: "var(--chinook)",
+        gold: "var(--gold)",
+        arch: "var(--arch)",
+        dusk: "var(--dusk)",
+        "dusk-ink": "var(--dusk-ink)",
+        "dusk-muted": "var(--dusk-muted)",
+        "dusk-line": "var(--dusk-line)",
       },
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      fontFamily: {
+        display: ["var(--font-fraunces)", "Georgia", "Times New Roman", "serif"],
+        sans: ["var(--font-karla)", "ui-sans-serif", "system-ui", "sans-serif"],
+      },
+      maxWidth: {
+        site: "76rem",
+        measure: "38rem",
+      },
+      gridTemplateColumns: {
+        // Section shell: sticky title column on the left, content on the right.
+        section: "13rem minmax(0, 1fr)",
+        // Hanging meta column inside a section (dates, kinds, years).
+        entry: "7.5rem minmax(0, 1fr)",
       },
     },
   },

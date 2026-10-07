@@ -1,7 +1,7 @@
 "use client"
 import { useEffect, useState } from "react"
 
-const targetDate = new Date("2025-08-27T00:00:00")
+const targetDate = new Date("2026-12-18T00:00:00")
 
 const CatherinePage = () => {
   const [timeLeft, setTimeLeft] = useState({
