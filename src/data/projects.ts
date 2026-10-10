@@ -19,6 +19,31 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    slug: "softsignal",
+    title: "SoftSignal",
+    kind: "Data / ML",
+    accent: "#d86f8f",
+    context: "IEEE YP Industry Hackathon 2026 · 48-hour build · team of 2",
+    tagline:
+      "A classifier that flags likely teen accounts from writing style and activity alone, retrained round by round while five AI agents watch it.",
+    description: [
+      "Birthdays are the easiest thing to fake online. For the IEEE Young Professionals Industry Hackathon at the University of Calgary, Jericho Huelar and I took the age-assurance case: decide teen (13 to 17) or adult (23+) for 3,000 accounts using only what people write and how they use the app. No typed birthday, no photos. The output is a ranked likely-teen list for a trust-and-safety team, with one setting they control: the share of adults they accept being wrongly flagged.",
+      "The model is a two-level stack in scikit-learn. Level one is a TF-IDF text model over word and character n-grams with a logistic regression on top, with digits masked so an age typed in a post can't be read. Level two is a second logistic regression over that text score plus 16 activity and style columns, trained only on out-of-fold scores so no account is scored by a model that saw its own label. With all 2,100 training labels it catches 92% of teens on the 900 held-out accounts while flagging 17.1% of adults.",
+      "The harder part was the loop. The system starts with zero labels, and each round a simulated verifier reveals a small random audit sample. A challenger model refits on those labels and only goes live when it beats the current one on accounts neither has seen. Around the loop sit five Claude agents: a drift watcher, an error analyst, a loop controller, a verify-band triager, and an honesty auditor that checks every number on our slides against the results files. Each agent has a plain-rule fallback, and the console shows on every round whether it ran live, fell back, or was replayed.",
+      "In the recorded run the model went live at round seven, taking recall from 79.8% to 88.4% and the false-teen rate from 35.6% to 16.7% on held-out accounts. The honest finding is that the agents did not make the model more accurate. Over five seeds the agent-run loop ended level with the plain-rule loop, so the accuracy comes from the model and the agents earn their place by explaining, adapting, and auditing. The text is real 2004 blog posts, the activity data is synthetic, and the result is a likelihood for requesting verification, never proof of age.",
+    ],
+    stack: ["Python", "scikit-learn", "pandas", "Claude API", "Pydantic", "Streamlit", "pytest"],
+    points: [
+      "Recall 79.8% to 88.4% and false-teen rate 35.6% to 16.7% over seven rounds, on 900 held-out accounts",
+      "Two-level TF-IDF and logistic regression stack, trained on nested out-of-fold scores",
+      "Five Claude agents around the loop, each with a plain-rule fallback and a live, fallback, or replay badge",
+      "An auditor agent that checks every pitch claim against the results files",
+      "800+ tests across the model, loop, agents, and console",
+    ],
+    github: "https://github.com/Alexd2004/industry-hackathon-lab",
+    figure: { value: "88%", label: "of teens caught on held-out accounts, up from 80%" },
+  },
+  {
     slug: "urbansignal",
     title: "UrbanSignal",
     kind: "Full-Stack",
