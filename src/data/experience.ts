@@ -41,6 +41,8 @@ export const experience: Experience[] = [
     points: [
       "Developed 8 client applications in Next.js, TypeScript, React, and Go on Vercel, plus an in-progress React Native rewards app for a restaurant chain.",
       "Drove adoption of a ticket-based PR workflow using Jira with issue-keyed branches, conventional commits, and mandatory peer review, saving the team 4+ hours weekly in rework and merge conflicts.",
+      "Led the Likha Massage Wellness marketing site in Next.js 15 and TypeScript as top contributor, building the landing page, testimonials, services layout, and contact inquiry form.",
+      "Built the Go investment API on Encore and Postgres with input validation and a D3 multi-series chart with date-range filtering for WSBenchmarks, plus the competition timeline and team roster pages for a University of Alberta robotics club site.",
     ],
   },
   {

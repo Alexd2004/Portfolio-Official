@@ -31,6 +31,8 @@ export const projects: Project[] = [
       "The model is a two-level stack in scikit-learn. Level one is a TF-IDF text model over word and character n-grams with a logistic regression on top, with digits masked so an age typed in a post can't be read. Level two is a second logistic regression over that text score plus 16 activity and style columns, trained only on out-of-fold scores so no account is scored by a model that saw its own label. With all 2,100 training labels it catches 92% of teens on the 900 held-out accounts while flagging 17.1% of adults.",
       "The harder part was the loop. The system starts with zero labels, and each round a simulated verifier reveals a small random audit sample. A challenger model refits on those labels and only goes live when it beats the current one on accounts neither has seen. Around the loop sit five Claude agents: a drift watcher, an error analyst, a loop controller, a verify-band triager, and an honesty auditor that checks every number on our slides against the results files. Each agent has a plain-rule fallback, and the console shows on every round whether it ran live, fell back, or was replayed.",
       "In the recorded run the model went live at round seven, taking recall from 79.8% to 88.4% and the false-teen rate from 35.6% to 16.7% on held-out accounts. The honest finding is that the agents did not make the model more accurate. Over five seeds the agent-run loop ended level with the plain-rule loop, so the accuracy comes from the model and the agents earn their place by explaining, adapting, and auditing. The text is real 2004 blog posts, the activity data is synthetic, and the result is a likelihood for requesting verification, never proof of age.",
+      "Two details make the scores usable by a human reviewer. Because the second level is a linear model on standardized inputs, every score breaks down exactly into signed per-feature contributions, and the top three become the reason chips shown beside each account. The inputs are an allow-list of 16 activity and style columns asserted in code: age, gender, job, account age, and friend count are forbidden as features, and a test fails if one slips in.",
+      "The agents are fenced the same way. Every number in an agent's output has to appear in its input, a recorded output is only replayed when the round's input hash matches, and the controller's proposals are re-checked against the hold floor and promote gate in plain code. My side of the build was the drift watcher, the triager, the auditor, the replay layer, the per-account explanations, and a second console served from Python's standard library http.server next to the Streamlit one.",
     ],
     stack: ["Python", "scikit-learn", "pandas", "Claude API", "Pydantic", "Streamlit", "pytest"],
     points: [
@@ -54,8 +56,10 @@ export const projects: Project[] = [
     description: [
       "Built in 24 hours at Hack the Change 2025, UrbanSignal ingests over a thousand Calgary 311 service requests into Supabase Postgres and surfaces them through a community-district choropleth map, a live activity feed, and per-request detail and status views for city staff.",
       "The part I'm proudest of is the AI analytics page. Rather than streaming raw rows to the model, it aggregates open requests by community and category server-side into a compact structured summary before prompting, so token cost stays flat as the dataset grows. Authentication is cookie-based SSR through @supabase/ssr with signup, email confirmation, password reset, and middleware-protected routes.",
+      "The map is Leaflet over a City of Calgary community district boundary file with 313 polygons. The boundaries and the requests share no ID, so counts are joined to districts by normalised community name, after a cleaning pass that drops stray one-to-three character district codes and title-cases the all-caps names. The result is a seven-step yellow-to-red scale with a popup per district.",
+      "The chat route runs on the Edge runtime and calls the OpenAI Responses API with plain fetch, no SDK, and replies are rendered by a small hand-written Markdown renderer. On the staff side, closing a request writes a notification row for the resident who submitted it, and the request table filters by community and type and pages through the latest thousand rows.",
     ],
-    stack: ["Next.js 15", "React 19", "TypeScript", "Supabase", "PostgreSQL", "MapLibre", "OpenAI"],
+    stack: ["Next.js 15", "React 19", "TypeScript", "Supabase", "PostgreSQL", "Leaflet", "OpenAI"],
     points: [
       "Placed 9th of 65 teams in a 24-hour build",
       "Community-district choropleth over 1,000+ real service requests",
@@ -78,6 +82,7 @@ export const projects: Project[] = [
       "Rather than assembling an off-the-shelf flight controller with stock firmware, we're building the whole stack ourselves. The flight controller is an ESP32 with an MPU-6050 IMU on a custom board, talking to a RadioMaster ELRS receiver over CRSF at 420 kbaud and driving a BLHeli_S 4-in-1 ESC on four 1104 brushless motors. Power is a 3S 450mAh LiPo through a 5V buck converter, and there's an analog FPV link to a Quest 2 headset.",
       "The firmware is C/C++ on PlatformIO, structured as five independently testable modules: CRSF parsing, sensor fusion, PID stabilization, quad-X motor mixing, and failsafe. We deliberately chose an IMU library that exposes raw registers rather than onboard DMP fusion, so the complementary filter (98% gyro, 2% accelerometer, with 500-sample bias calibration) is written by hand. Before any RF hardware was bound, we validated the CRSF parser with a loopback test where the ESP32 builds valid frames itself, CRC-8 polynomial 0xD5 and all, writes them out its own TX pin, and parses them back on RX.",
       "Getting here involved a thrust-to-weight analysis that flagged a 2S under-volting risk on the motors, a correction after checking manufacturer specs, and a switch to 3S and a lighter 20A ESC. Pin assignment was cross-checked against the board's actual pinout, excluding strapping, JTAG, and input-only pins, with a firmware-only fallback for a PSRAM conflict on the UART pair. Stretch goals are altitude hold, position hold, and target tracking.",
+      "Bench bring-up so far has mostly been a fight with the IMU. The GY-521 breakout turned out to carry a clone chip that reports a WHO_AM_I of 0x72 instead of 0x68, which sent the library's accelerometer calibration to the wrong offset register, where it never converged. The firmware now reads the ID itself, accepts both, and runs a ported calibration routine against the legacy register directly. Along the way we wrote wiring diagnostics that can tell a short to ground from an unpowered module from a healthy bus, and an I2C recovery routine that clocks SCL up to nine times to free a stuck line.",
     ],
     stack: ["C/C++", "ESP32", "PlatformIO", "MPU-6050", "ELRS / CRSF", "BLHeli_S", "KiCad"],
     points: [
@@ -99,6 +104,8 @@ export const projects: Project[] = [
     description: [
       "The pipeline scrapes 1,673 NFL games from 2018 to 2024 across 28 scripts using BeautifulSoup, requests, and Selenium, handling paginated navigation, inconsistent table schemas, and rate limiting, and lands them as 30,000+ structured CSVs. A rolling-statistics engine then generates team, player, and momentum features with peak tracking, cached to Parquet for fast retraining.",
       "The model is an XGBoost classifier reaching 71% accuracy against a 62.8% majority-class baseline, tuned through a staged randomized hyperparameter search with class-weight balancing, SMOTE oversampling, and decision-threshold optimization. It's validated with a walk-forward backtest across the 2024 season that retrains weekly on prior data only, to avoid look-ahead bias, and served through a Flask JSON API consumed by a Next.js frontend.",
+      "All of the data comes from Pro Football Reference, which hides most of its tables inside HTML comments. The scraper parses the visible page, then re-parses every comment node, and lands 19 tables per game: drives, snap counts, starters, advanced passing, rushing, receiving and defence, play-by-play, and game info. Ragged tables take their header from the longest row, relocated franchises are mapped to one name, and each boxscore request waits about three seconds.",
+      "Features are built in strict game order. Each game's row is assembled from the rolling state before that game's own stats are applied, and the state resets every season. That state holds season-to-date averages with a peak high and low per stat, last-three and last-five momentum windows, and 154 home-minus-away team differentials, plus per-player columns for 68 roster slots a side. For upcoming games, rosters are inferred from the top players per position by cumulative snap count. The cached matrix is 1,657 games by roughly 65,000 columns.",
     ],
     stack: ["Python", "XGBoost", "scikit-learn", "pandas", "BeautifulSoup", "Selenium", "Flask", "Next.js"],
     points: [
@@ -120,6 +127,8 @@ export const projects: Project[] = [
     description: [
       "EcoMinded is a climate-awareness platform built with the Nullus team. The centrepiece is a MapLibre GL choropleth of fossil emissions across 190+ countries, driven by a data-driven fill expression over a GeoJSON layer.",
       "The interesting problem was the color ramp. Emissions span a roughly 300,000× range between the largest and smallest countries, so a linear scale renders almost everything as the lowest color. Applying gamma correction (ratio^0.2) to the ramp keeps low-emitting countries visually distinguishable against China's outlier value. There's also a GPT-backed sustainability chat assistant with an API route handling upstream quota and error states.",
+      "The map has no basemap tiles at all. The style is defined inline as one fill layer and one border layer over a static GeoJSON of country shapes, with each country's colour precomputed and fed into a MapLibre match expression keyed on country name, falling back to white where there's no data. I built the landing page, the chatbot, and the emissions colouring; a teammate set up the initial map and the Drizzle schema.",
+      "The chat route validates the incoming message list, calls the model over plain fetch, and maps an upstream insufficient-quota error to a 429 so the UI can say something more useful than a generic failure. The API key is checked with Zod when the module loads, so a missing key fails at startup instead of on the first message.",
     ],
     stack: ["Next.js 15", "TypeScript", "Tailwind CSS", "MapLibre GL", "Turso", "Drizzle ORM", "OpenAI"],
     points: [
@@ -143,6 +152,8 @@ export const projects: Project[] = [
     description: [
       "BillBoard helps Canadians follow government policy at every level through a newsfeed, community forums, polls, petitions, and an interactive map of their representatives. Billy, an OpenAI-backed assistant, explains legislation in plain language.",
       "As one of five engineers in a 48-hour build, I owned the policy data layer: the Supabase integration hooks, policy ingestion, and government-level sorting. I also implemented the likes/dislikes voting system on policy records with user attribution, and integrated the AI chatbot.",
+      "The policy list started the hackathon as a hardcoded array of four mock policies. I replaced it with a Supabase query, then layered the filtering on top: free-text search over title and summary, topic buttons derived from the distinct tags in the data, and a Local, Provincial, or Federal filter against an array column. Votes live in a ratings table keyed by user and policy with a value of plus or minus one. Changing a vote removes the previous row before inserting the new one, and the totals drive a like/dislike split bar on the policy page with ARIA progressbar attributes.",
+      "Billy's API route checks that the request carries a message list, calls the model, and turns an upstream quota error into a 429. The key is validated with Zod at load, and the chat box is mounted in the root layout so it follows the user across every page.",
     ],
     stack: ["Next.js", "TypeScript", "Supabase", "PostgreSQL", "Leaflet", "OpenAI"],
     points: [
@@ -163,10 +174,12 @@ export const projects: Project[] = [
     tagline:
       "A retail self-checkout simulation built by a 20-student team, with JUnit coverage across the core flows.",
     description: [
-      "A software engineering course project simulating a full retail self-checkout: barcode scanning, cart management, tax and payment logic, and inventory updates, with a JavaFX interface and JUnit tests across the major functionality.",
+      "A software engineering course project simulating a full retail self-checkout: barcode scanning, cart management, tax and payment logic, and inventory updates, with a Swing interface and JUnit tests across the major functionality.",
       "The engineering challenge was less the code and more the coordination. With roughly twenty students on one codebase, the project only worked because each subsystem sat behind a defined interface, so teams could build in parallel and integrate without stepping on each other.",
+      "The final iteration is three Eclipse projects: a simulated hardware library, the control software, and the tests. The software reaches the hardware only through listeners for the scanner, scale, coin and banknote handlers, card reader, and receipt printer. A second layer of the team's own observers publishes product and funds events to a coordinator that sits between the logic and the Swing screens for the customer and attendant stations.",
+      "My piece was the add-item-by-PLU-code use case and its tests, after working on weight-aware barcode adding in the earlier iteration. Around it the team covered scanning, text and visual catalogue search, bulky items, bags, weight-discrepancy blocking, coin, banknote and card payment with change, membership, and attendant actions like refilling dispensers and printer paper. The final test suite is 186 JUnit tests across 16 classes.",
     ],
-    stack: ["Java", "JavaFX", "Swing", "JUnit"],
+    stack: ["Java", "Swing", "JUnit"],
     points: [
       "Barcode scanning, cart, payment, and inventory subsystems",
       "JUnit tests across the major flows",
@@ -185,6 +198,8 @@ export const projects: Project[] = [
     description: [
       "A computer graphics course project in C++ and OpenGL 3.3. I wrote the rendering and shader layer on top of the course's provided window and GL framework.",
       "That covers a hierarchical transform system composing per-body scale, axial rotation, orbital rotation, and orbital inclination, with the moon's model matrix built against the earth's so it orbits a moving parent; a procedural UV-sphere generator producing positions, normals, UVs, and triangle winding from stack and slice counts; and vertex and fragment shaders implementing textured Phong shading with a reflect()-based specular term, with per-object toggling so the sun bypasses lighting.",
+      "The scene is a sun, earth, and moon inside a starfield, all drawn from one 32-slice, 16-stack sphere mesh with a single shader program. The starfield is that same sphere scaled up fifty times and drawn first with depth writes off and culling disabled, so the camera sees its inside. Lighting is a white point light at the sun's centre, computed in world space with normals transformed by the inverse transpose of the model matrix.",
+      "Each body's spin and orbit is its own accumulated angle advanced by delta time, so an ImGui panel can pause the animation, scale its speed from zero to five times, or reset every angle at once.",
     ],
     stack: ["C++", "OpenGL 3.3", "GLSL", "GLM", "ImGui"],
     points: [
