@@ -2,6 +2,12 @@ import { certifications, competitions, type Credential } from "@/data/certificat
 import { Section } from "./Section";
 import { Reveal } from "./motion/Reveal";
 
+const WORDS = ["No", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"];
+const count = (n: number, one: string, many: string) =>
+  `${WORDS[n] ?? n} ${n === 1 ? one : many}`;
+// Counted from the data so the line stays right when a credential is added.
+const lede = `${count(certifications.length, "certification", "certifications")} and ${count(competitions.length, "hackathon placing", "hackathon placings").toLowerCase()}.`;
+
 function CredentialList({ heading, items }: { heading: string; items: Credential[] }) {
   return (
     <div>
@@ -39,7 +45,7 @@ function CredentialList({ heading, items }: { heading: string; items: Credential
 
 export function Credentials() {
   return (
-    <Section id="credentials" title="Credentials" lede="Certificates on the wall and placings on the board.">
+    <Section id="credentials" title="Credentials" lede={lede}>
       <div className="space-y-16">
         <CredentialList heading="Certifications" items={certifications} />
         <CredentialList heading="Hackathons" items={competitions} />

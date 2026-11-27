@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     default: site.name,
     template: `%s · ${site.name}`,
   },
-  description: `${site.name} — ${site.tagline} Software engineer at Midas Labs, co-founder of Nullus, CS student at the University of Calgary.`,
+  description: `${site.name}. ${site.tagline} Software engineer at Midas Labs, co-founder of Nullus, CS student at the University of Calgary.`,
   openGraph: {
     title: site.name,
     description: site.tagline,

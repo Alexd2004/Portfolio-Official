@@ -36,10 +36,10 @@ const CatherinePage = () => {
         {/* Title */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-6xl font-bold text-cyan-100 mb-4 leading-tight drop-shadow-lg">
-            Catherine&apos;s Countdown
+            Catherine&apos;s countdown
           </h1>
           <h2 className="text-2xl md:text-3xl font-semibold text-cyan-300 mb-2">
-            Special Day Coming Soon
+            Special day coming soon
           </h2>
         </div>
         {/* Countdown Timer */}
