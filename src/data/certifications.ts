@@ -28,12 +28,21 @@ export const certifications: Credential[] = [
 
 export const competitions: Credential[] = [
   {
+    title: "Hack the Change 2026",
+    org: "University of Calgary",
+    year: "2026",
+    badge: "15th / 83",
+    detail:
+      "Placed 15th of 83 teams with SkillQuest, an app that turns the skills a job posting asks for into a game you play to learn them.",
+    link: "https://github.com/Alexd2004/HackTheChange2026",
+  },
+  {
     title: "Hack the Change 2025",
     org: "University of Calgary",
     year: "2025",
     badge: "9th / 65",
     detail:
-      "Placed 9th of 65 teams with UrbanSignal, a civic 311 analytics dashboard with an LLM analytics assistant.",
+      "Placed 9th of 65 teams with UrbanSignal, a civic 311 analytics dashboard with an LLM assistant.",
     link: "https://github.com/Alexd2004/HackTheChange2025-webapp",
   },
   {

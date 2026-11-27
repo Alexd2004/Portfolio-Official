@@ -19,6 +19,29 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    slug: "skillquest",
+    title: "SkillQuest",
+    kind: "Mobile / Full-Stack",
+    accent: "#8a6fd8",
+    context: "Hack the Change 2026 · 15th of 83 teams · team of 4",
+    tagline:
+      "Give it your resume and a job posting, and SkillQuest turns the skills you're missing into a game: stages, lessons, and a boss fight for each one.",
+    description: [
+      "SkillQuest reads your resume and a job posting, scores how well you match, and builds a quest map with one stage per missing skill. Each stage has two short lessons and a timed boss fight aimed at the concepts you missed. When you beat a boss, the skill goes onto your resume, and you can email yourself the updated PDF. Gemini writes the content, and a second pass answers every question without the answer key and drops any it disagrees with.",
+      "There were four of us. I did the platform side: the Supabase schema across seven migrations with row-level security on every table, anonymous sign-in and profiles, and progress tracking. I also built the resume email: an Edge Function that sends the PDF through AWS SES, with per-user and global limits reserved in one transaction before anything is sent. A failed send doesn't count against them, and we only log the recipient's domain.",
+      "The hardest bug came from content being generated in the background while people played. Retries and players opening a level could both start writing questions for it, so some levels ended up with two sets. I fixed it in the database: a claim on the level that expires after 90 seconds, a unique index on question position, and one function that saves the questions and their resources together. Plan creation also takes a request ID, so a retried request can't build a second plan.",
+    ],
+    stack: ["Expo", "React Native", "TypeScript", "Supabase", "PostgreSQL", "Deno Edge Functions", "Gemini", "AWS SES"],
+    points: [
+      "Placed 15th of 83 teams",
+      "Supabase schema with row-level security on every table, anonymous sign-in",
+      "Resume email over AWS SES with atomic per-user and global rate limits",
+      "Database-level claims so a level's questions are never written twice",
+    ],
+    github: "https://github.com/Alexd2004/HackTheChange2026",
+    figure: { value: "15th", label: "of 83 teams at Hack the Change 2026" },
+  },
+  {
     slug: "softsignal",
     title: "SoftSignal",
     kind: "Data / ML",
@@ -30,7 +53,7 @@ export const projects: Project[] = [
       "Birthdays are the easiest thing to fake online. For the IEEE Young Professionals Industry Hackathon at the University of Calgary, Jericho Huelar and I took the age-assurance case: decide teen (13 to 17) or adult (23+) for 3,000 accounts using only what people write and how they use the app. No typed birthday, no photos. The output is a ranked likely-teen list for a trust-and-safety team, with one setting they control: the share of adults they accept being wrongly flagged.",
       "The model is a two-level stack in scikit-learn. Level one is a TF-IDF text model over word and character n-grams with a logistic regression on top, with digits masked so an age typed in a post can't be read. Level two is a second logistic regression over that text score plus 16 activity and style columns, trained only on out-of-fold scores so no account is scored by a model that saw its own label. With all 2,100 training labels it catches 92% of teens on the 900 held-out accounts while flagging 17.1% of adults.",
       "The harder part was the loop. The system starts with zero labels, and each round a simulated verifier reveals a small random audit sample. A challenger model refits on those labels and only goes live when it beats the current one on accounts neither has seen. Around the loop sit five Claude agents: a drift watcher, an error analyst, a loop controller, a verify-band triager, and an honesty auditor that checks every number on our slides against the results files. Each agent has a plain-rule fallback, and the console shows on every round whether it ran live, fell back, or was replayed.",
-      "In the recorded run the model went live at round seven, taking recall from 79.8% to 88.4% and the false-teen rate from 35.6% to 16.7% on held-out accounts. The honest finding is that the agents did not make the model more accurate. Over five seeds the agent-run loop ended level with the plain-rule loop, so the accuracy comes from the model and the agents earn their place by explaining, adapting, and auditing. The text is real 2004 blog posts, the activity data is synthetic, and the result is a likelihood for requesting verification, never proof of age.",
+      "In the recorded run the model went live at round seven, taking recall from 79.8% to 88.4% and the false-teen rate from 35.6% to 16.7% on held-out accounts. The agents did not make the model more accurate. Over five seeds the agent-run loop ended level with the plain-rule loop, so the accuracy comes from the model, and the agents' job is to explain, adapt, and audit. The text is real 2004 blog posts, the activity data is synthetic, and the result is a likelihood for requesting verification, never proof of age.",
       "Two details make the scores usable by a human reviewer. Because the second level is a linear model on standardized inputs, every score breaks down exactly into signed per-feature contributions, and the top three become the reason chips shown beside each account. The inputs are an allow-list of 16 activity and style columns asserted in code: age, gender, job, account age, and friend count are forbidden as features, and a test fails if one slips in.",
       "The agents are fenced the same way. Every number in an agent's output has to appear in its input, a recorded output is only replayed when the round's input hash matches, and the controller's proposals are re-checked against the hold floor and promote gate in plain code. My side of the build was the drift watcher, the triager, the auditor, the replay layer, the per-account explanations, and a second console served from Python's standard library http.server next to the Streamlit one.",
     ],
@@ -55,7 +78,7 @@ export const projects: Project[] = [
       "A civic 311 analytics dashboard with an LLM assistant that reasons over aggregated data instead of raw rows.",
     description: [
       "Built in 24 hours at Hack the Change 2025, UrbanSignal ingests over a thousand Calgary 311 service requests into Supabase Postgres and surfaces them through a community-district choropleth map, a live activity feed, and per-request detail and status views for city staff.",
-      "The part I'm proudest of is the AI analytics page. Rather than streaming raw rows to the model, it aggregates open requests by community and category server-side into a compact structured summary before prompting, so token cost stays flat as the dataset grows. Authentication is cookie-based SSR through @supabase/ssr with signup, email confirmation, password reset, and middleware-protected routes.",
+      "The AI analytics page doesn't send raw rows to the model. It aggregates open requests by community and category server-side into a compact structured summary before prompting, so token cost stays flat as the dataset grows. Authentication is cookie-based SSR through @supabase/ssr with signup, email confirmation, password reset, and middleware-protected routes.",
       "The map is Leaflet over a City of Calgary community district boundary file with 313 polygons. The boundaries and the requests share no ID, so counts are joined to districts by normalised community name, after a cleaning pass that drops stray one-to-three character district codes and title-cases the all-caps names. The result is a seven-step yellow-to-red scale with a popup per district.",
       "The chat route runs on the Edge runtime and calls the OpenAI Responses API with plain fetch, no SDK, and replies are rendered by a small hand-written Markdown renderer. On the staff side, closing a request writes a notification row for the resident who submitted it, and the request table filters by community and type and pages through the latest thousand rows.",
     ],
@@ -77,9 +100,9 @@ export const projects: Project[] = [
     status: "in-progress",
     context: "Personal project · co-built with a friend · in bench bring-up",
     tagline:
-      "A mini quadcopter designed from the ground up: custom flight controller, from-scratch firmware, and every part selected by hand.",
+      "A mini quadcopter we're building ourselves: custom flight controller, firmware written from scratch, and every part picked by hand.",
     description: [
-      "Rather than assembling an off-the-shelf flight controller with stock firmware, we're building the whole stack ourselves. The flight controller is an ESP32 with an MPU-6050 IMU on a custom board, talking to a RadioMaster ELRS receiver over CRSF at 420 kbaud and driving a BLHeli_S 4-in-1 ESC on four 1104 brushless motors. Power is a 3S 450mAh LiPo through a 5V buck converter, and there's an analog FPV link to a Quest 2 headset.",
+      "We're building the whole stack ourselves instead of using an off-the-shelf flight controller and stock firmware. The flight controller is an ESP32 with an MPU-6050 IMU on a custom board, talking to a RadioMaster ELRS receiver over CRSF at 420 kbaud and driving a BLHeli_S 4-in-1 ESC on four 1104 brushless motors. Power is a 3S 450mAh LiPo through a 5V buck converter, and there's an analog FPV link to a Quest 2 headset.",
       "The firmware is C/C++ on PlatformIO, structured as five independently testable modules: CRSF parsing, sensor fusion, PID stabilization, quad-X motor mixing, and failsafe. We deliberately chose an IMU library that exposes raw registers rather than onboard DMP fusion, so the complementary filter (98% gyro, 2% accelerometer, with 500-sample bias calibration) is written by hand. Before any RF hardware was bound, we validated the CRSF parser with a loopback test where the ESP32 builds valid frames itself, CRC-8 polynomial 0xD5 and all, writes them out its own TX pin, and parses them back on RX.",
       "Getting here involved a thrust-to-weight analysis that flagged a 2S under-volting risk on the motors, a correction after checking manufacturer specs, and a switch to 3S and a lighter 20A ESC. Pin assignment was cross-checked against the board's actual pinout, excluding strapping, JTAG, and input-only pins, with a firmware-only fallback for a PSRAM conflict on the UART pair. Stretch goals are altitude hold, position hold, and target tracking.",
       "Bench bring-up so far has mostly been a fight with the IMU. The GY-521 breakout turned out to carry a clone chip that reports a WHO_AM_I of 0x72 instead of 0x68, which sent the library's accelerometer calibration to the wrong offset register, where it never converged. The firmware now reads the ID itself, accepts both, and runs a ported calibration routine against the legacy register directly. Along the way we wrote wiring diagnostics that can tell a short to ground from an unpowered module from a healthy bus, and an I2C recovery routine that clocks SCL up to nine times to free a stuck line.",
@@ -126,7 +149,7 @@ export const projects: Project[] = [
       "An interactive world emissions explorer with a color-scaling algorithm that keeps small emitters visible.",
     description: [
       "EcoMinded is a climate-awareness platform built with the Nullus team. The centrepiece is a MapLibre GL choropleth of fossil emissions across 190+ countries, driven by a data-driven fill expression over a GeoJSON layer.",
-      "The interesting problem was the color ramp. Emissions span a roughly 300,000× range between the largest and smallest countries, so a linear scale renders almost everything as the lowest color. Applying gamma correction (ratio^0.2) to the ramp keeps low-emitting countries visually distinguishable against China's outlier value. There's also a GPT-backed sustainability chat assistant with an API route handling upstream quota and error states.",
+      "Emissions span a roughly 300,000× range between the largest and smallest countries, so a linear color scale renders almost everything as the lowest color. Applying gamma correction (ratio^0.2) to the ramp keeps low-emitting countries visually distinguishable against China's outlier value. There's also a GPT-backed sustainability chat assistant with an API route handling upstream quota and error states.",
       "The map has no basemap tiles at all. The style is defined inline as one fill layer and one border layer over a static GeoJSON of country shapes, with each country's colour precomputed and fed into a MapLibre match expression keyed on country name, falling back to white where there's no data. I built the landing page, the chatbot, and the emissions colouring; a teammate set up the initial map and the Drizzle schema.",
       "The chat route validates the incoming message list, calls the model over plain fetch, and maps an upstream insufficient-quota error to a 429 so the UI can say something more useful than a generic failure. The API key is checked with Zod when the module loads, so a missing key fails at startup instead of on the first message.",
     ],
@@ -175,7 +198,7 @@ export const projects: Project[] = [
       "A retail self-checkout simulation built by a 20-student team, with JUnit coverage across the core flows.",
     description: [
       "A software engineering course project simulating a full retail self-checkout: barcode scanning, cart management, tax and payment logic, and inventory updates, with a Swing interface and JUnit tests across the major functionality.",
-      "The engineering challenge was less the code and more the coordination. With roughly twenty students on one codebase, the project only worked because each subsystem sat behind a defined interface, so teams could build in parallel and integrate without stepping on each other.",
+      "Most of the difficulty was coordination. With roughly twenty students on one codebase, the project only worked because each subsystem sat behind a defined interface, so teams could build in parallel and integrate without stepping on each other.",
       "The final iteration is three Eclipse projects: a simulated hardware library, the control software, and the tests. The software reaches the hardware only through listeners for the scanner, scale, coin and banknote handlers, card reader, and receipt printer. A second layer of the team's own observers publishes product and funds events to a coordinator that sits between the logic and the Swing screens for the customer and attendant stations.",
       "My piece was the add-item-by-PLU-code use case and its tests, after working on weight-aware barcode adding in the earlier iteration. Around it the team covered scanning, text and visual catalogue search, bulky items, bags, weight-discrepancy blocking, coin, banknote and card payment with change, membership, and attendant actions like refilling dispensers and printer paper. The final test suite is 186 JUnit tests across 16 classes.",
     ],

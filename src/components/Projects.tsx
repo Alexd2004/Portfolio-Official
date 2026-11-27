@@ -103,7 +103,7 @@ export function Projects() {
     <Section
       id="projects"
       title="Projects"
-      lede="Two hackathons, a data pipeline, some coursework I still like, and a drone."
+      lede="Four hackathons, a data pipeline, some coursework I still like, and a drone."
     >
       <ol className="space-y-12 md:space-y-14">
         {projects.map((p, i) => (

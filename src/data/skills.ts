@@ -18,7 +18,7 @@ export const skills = [
     ],
   },
   {
-    group: "Infrastructure & Testing",
+    group: "Infrastructure & testing",
     items: [
       "AWS",
       "Terraform",
