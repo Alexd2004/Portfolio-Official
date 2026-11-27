@@ -38,6 +38,7 @@ export const projects: Project[] = [
       "Resume email over AWS SES with atomic per-user and global rate limits",
       "Database-level claims so a level's questions are never written twice",
     ],
+    image: "/img/skillQuest.webp",
     github: "https://github.com/Alexd2004/HackTheChange2026",
     figure: { value: "15th", label: "of 83 teams at Hack the Change 2026" },
   },
